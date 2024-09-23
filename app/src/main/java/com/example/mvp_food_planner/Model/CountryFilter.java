@@ -1,9 +1,9 @@
 package com.example.mvp_food_planner.Model;
 
-public class CounteryFilter {
+public class CountryFilter {
     public String strArea;
 
-    public CounteryFilter(String strArea) {
+    public CountryFilter(String strArea) {
         this.strArea = strArea;
     }
     public String getStrArea() {

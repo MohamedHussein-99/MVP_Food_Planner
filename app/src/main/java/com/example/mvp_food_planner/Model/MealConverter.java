@@ -5,6 +5,7 @@ import androidx.room.TypeConverter;
 import com.example.mvp_food_planner.Model.Entity.Meal;
 import com.google.gson.Gson;
 
+// Converts Meal objects to JSON and vice versa //
 public class MealConverter {
     @TypeConverter
     public String fromMeal(Meal meal) {
