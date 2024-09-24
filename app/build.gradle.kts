@@ -50,4 +50,11 @@ dependencies {
     // Room
     implementation ("androidx.room:room-runtime:2.6.1")
     annotationProcessor ("androidx.room:room-compiler:2.6.1")
+    // lotti and nav
+    implementation ("com.airbnb.android:lottie:6.1.0")
+    implementation ("pl.droidsonroids.gif:android-gif-drawable:1.2.22")
+    implementation ("com.airbnb.android:lottie:latest_version")
+    implementation ("com.google.firebase:firebase-firestore:25.1.0")
+    implementation ("androidx.navigation:navigation-fragment-ktx:2.8.1")
+    implementation ("androidx.navigation:navigation-ui-ktx:2.8.1")
 }
