@@ -10,4 +10,14 @@
         android:name="com.example.mvp_food_planner.View.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/favFragment"
+        android:name="com.example.mvp_food_planner.View.FavFragment"
+        android:label="fragment_fav"
+        tools:layout="@layout/fragment_fav" />
+    <fragment
+        android:id="@+id/plannerFragment"
+        android:name="com.example.mvp_food_planner.View.plannerFragment"
+        android:label="fragment_planner"
+        tools:layout="@layout/fragment_planner" />
 </navigation>
