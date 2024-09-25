@@ -1,6 +1,8 @@
 // app/src/main/java/com/example/mvp_food_planner/Network/Client.java
 package com.example.mvp_food_planner.Network;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
 import com.example.mvp_food_planner.Model.CategoryFilter;
@@ -18,6 +20,7 @@ public class Client {
     private static final String BASE_URL = "https://www.themealdb.com/api/json/v1/1/";
     private final ApiServices service;
     private static Client client;
+    private static final String TAG = "Client";
 
     private Client() {
         Retrofit retrofit = new Retrofit.Builder()
@@ -36,14 +39,21 @@ public class Client {
     }
 
     // Generic method to handle different requests
-    private <T> void fetchData(Call<GenericeResponse<T>> call, NetworkCallback<T> callback) {
+    // add a boolean parameter to differentiate between the two types of requests , to avoid category error
+    private <T> void fetchData(Call<GenericeResponse<T>> call, NetworkCallback<T> callback, boolean isCategory) {
         call.enqueue(new Callback<GenericeResponse<T>>() {
             @Override
             public void onResponse(@NonNull Call<GenericeResponse<T>> call, @NonNull retrofit2.Response<GenericeResponse<T>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    callback.onSuccess(response.body().meals);
+                    if (isCategory && response.body().getCategories() != null) {
+                        callback.onSuccess(response.body().getCategories());
+                    } else if (!isCategory && response.body().getMeals() != null) {
+                        callback.onSuccess(response.body().getMeals());
+                    } else {
+                        callback.onFailure("Failed to get data");
+                    }
                 } else {
-                    callback.onFailure("Failed to get data");
+                    callback.onFailure("Failed to get data: " + response.message());
                 }
             }
 
@@ -55,18 +65,18 @@ public class Client {
     }
 
     public void getCategoriesList(NetworkCallback<CategoryFilter> callback) {
-        fetchData(service.getCategories(), callback);
+        fetchData(service.getCategories(), callback , true);
     }
 
     public void getIngredientsList(NetworkCallback<IngredientFilter> callback) {
-        fetchData(service.getIngredients(), callback);
+        fetchData(service.getIngredients(), callback , false);
     }
 
     public void getCountriesList(NetworkCallback<CountryFilter> callback) {
-        fetchData(service.getCountries(), callback);
+        fetchData(service.getCountries(), callback, false);
     }
 
     public void getRandomMeal(NetworkCallback<Meal> callback) {
-        fetchData(service.getMeal(), callback);
+        fetchData(service.getMeal(), callback, false);
     }
 }
