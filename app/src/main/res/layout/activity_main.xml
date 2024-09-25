@@ -5,27 +5,57 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#E1D4C1"
     tools:context=".MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/lottieAnimationView"
-        android:layout_width="180dp"
-        android:layout_height="150dp"
+        android:id="@+id/lottieChef"
+        android:layout_width="330dp"
+        android:layout_height="228dp"
+        android:layout_marginTop="184dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
         app:lottie_rawRes="@raw/animationchef" />
 
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/lottieStart"
+        android:layout_width="330dp"
+        android:layout_height="228dp"
+        android:layout_marginTop="32dp"
+        app:layout_constraintStart_toStartOf="@+id/lottieChef"
+        app:layout_constraintTop_toBottomOf="@+id/lottieChef"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/start" />
 
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/lottieHand"
+        android:layout_width="163dp"
+        android:layout_height="117dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="12dp"
+        android:rotation="-21"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lottieChef"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/hand" />
+
+    <TextView
+        android:id="@+id/txtfoodfiesta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="96dp"
+        android:layout_marginTop="108dp"
+        android:fontFamily="@font/aclonica"
+        android:text="@string/foodfiesta"
+        android:textColor="#FE5B07"
+        android:textSize="34sp"
+        android:textStyle="bold|italic"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

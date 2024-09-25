@@ -1,11 +1,14 @@
 // app/src/main/java/com/example/mvp_food_planner/MainActivity.java
 package com.example.mvp_food_planner;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.example.mvp_food_planner.Model.CategoryFilter;
 import com.example.mvp_food_planner.Model.CountryFilter;
 import com.example.mvp_food_planner.Model.Entity.Meal;
@@ -19,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
 
+    /* testing
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,4 +98,22 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+    */
+
+    LottieAnimationView lottieStart;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        lottieStart = findViewById(R.id.lottieStart);
+        lottieStart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, homeActivity.class);
+                startActivity(intent);
+            }
+        });
+
+    }
+
 }

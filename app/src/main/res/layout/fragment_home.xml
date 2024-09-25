@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".View.HomeFragment">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#E1D4C1">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/txtDailySuggest"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/hachi_maru_pop"
+                android:text="@string/dailysuggest"
+                android:textColor="#7E102C"
+                android:textSize="24sp"
+                android:textStyle="bold|italic"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/lottieRandomFood"
+                android:layout_width="74dp"
+                android:layout_height="57dp"
+                android:layout_marginStart="6dp"
+                android:layout_marginTop="7dp"
+                app:layout_constraintBottom_toTopOf="@+id/recyclerRandomMeal"
+                app:layout_constraintStart_toEndOf="@+id/txtDailySuggest"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                app:lottie_rawRes="@raw/randomfood" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerRandomMeal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="22dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtDailySuggest" />
+
+            <TextView
+                android:id="@+id/txtCuisines"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:fontFamily="@font/hachi_maru_pop"
+                android:text="@string/txtcuisines"
+                android:textColor="#7E102C"
+                android:textSize="20sp"
+                android:textStyle="bold|italic"
+                app:layout_constraintStart_toStartOf="@+id/txtDailySuggest"
+                app:layout_constraintTop_toBottomOf="@+id/recyclerRandomMeal" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerByCuisines"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="20dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtCuisines" />
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/lottieCuisine"
+                android:layout_width="99dp"
+                android:layout_height="77dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="4dp"
+                app:layout_constraintBottom_toBottomOf="@+id/txtCuisines"
+                app:layout_constraintStart_toEndOf="@+id/txtCuisines"
+                app:layout_constraintTop_toBottomOf="@+id/recyclerRandomMeal"
+                app:layout_constraintVertical_bias="0.629"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                app:lottie_rawRes="@raw/cuisine" />
+
+            <TextView
+                android:id="@+id/txtCountry"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="@string/txtcountry"
+                android:textColor="#7E102C"
+                android:textSize="20sp"
+                android:textStyle="bold|italic"
+                app:layout_constraintStart_toStartOf="@+id/txtCuisines"
+                app:layout_constraintTop_toBottomOf="@+id/recyclerByCuisines" />
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/lottieEarth"
+                android:layout_width="90dp"
+                android:layout_height="63dp"
+                app:layout_constraintEnd_toEndOf="@+id/lottieCuisine"
+                app:layout_constraintTop_toBottomOf="@+id/recyclerByCuisines"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                app:lottie_rawRes="@raw/earth" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerCountry"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="14dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/lottieEarth" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</FrameLayout>

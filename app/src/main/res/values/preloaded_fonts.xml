@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="preloaded_fonts" translatable="false">
+        <item>@font/</item>
+        <item>@font/aclonica</item>
+        <item>@font/fira_code_light</item>
+        <item>@font/fjalla_one</item>
+        <item>@font/hachi_maru_pop</item>
+        <item>@font/indie_flower</item>
+    </array>
+</resources>
