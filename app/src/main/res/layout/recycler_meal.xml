@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/recycler_Meal"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/imgMeal"
+        android:layout_width="216dp"
+        android:layout_height="216dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/soft_edges"
+        app:circularflow_radiusInDP="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/txtTitle"
+        android:layout_width="99dp"
+        android:layout_height="33dp"
+        android:text="@string/title"
+        android:textSize="24sp"
+        android:textStyle="bold|italic"
+        app:layout_constraintStart_toStartOf="@+id/imgMeal"
+        app:layout_constraintTop_toBottomOf="@+id/imgMeal" />
+
+    <TextView
+        android:id="@+id/txtBreif"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/brief"
+        android:textSize="20sp"
+        android:textStyle="italic"
+        app:layout_constraintStart_toStartOf="@+id/txtTitle"
+        app:layout_constraintTop_toBottomOf="@+id/txtTitle" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

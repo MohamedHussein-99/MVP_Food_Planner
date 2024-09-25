@@ -1,15 +1,13 @@
 // app/src/main/java/com/example/mvp_food_planner/Network/Client.java
 package com.example.mvp_food_planner.Network;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 
-import com.example.mvp_food_planner.Model.CategoryFilter;
-import com.example.mvp_food_planner.Model.CountryFilter;
+import com.example.mvp_food_planner.Model.POJO.CategoryFilter;
+import com.example.mvp_food_planner.Model.POJO.CountryFilter;
 import com.example.mvp_food_planner.Model.GenericeResponse;
 import com.example.mvp_food_planner.Model.Entity.Meal;
-import com.example.mvp_food_planner.Model.IngredientFilter;
+import com.example.mvp_food_planner.Model.POJO.IngredientFilter;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -22,7 +20,7 @@ public class Client {
     private static Client client;
     private static final String TAG = "Client";
 
-    private Client() {
+    public Client() {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())

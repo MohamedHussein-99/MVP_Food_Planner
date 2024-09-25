@@ -1,16 +1,15 @@
 package com.example.mvp_food_planner;
 
 import android.os.Bundle;
-import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.mvp_food_planner.View.FavFragment;
-import com.example.mvp_food_planner.View.HomeFragment;
-import com.example.mvp_food_planner.View.plannerFragment;
+import com.example.mvp_food_planner.Screens.FavFragment;
+import com.example.mvp_food_planner.Screens.HomeScreen.View.HomeFragment;
+import com.example.mvp_food_planner.Screens.plannerFragment;
 import com.example.mvp_food_planner.databinding.ActivityHomeBinding;
 
 public class homeActivity extends AppCompatActivity {

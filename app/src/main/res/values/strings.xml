@@ -7,4 +7,6 @@
     <string name="txtcountry">Your Fav Country</string>
     <string name="welcome">Welcome</string>
     <string name="foodfiesta">Food Fiesta</string>
+    <string name="title">Title</string>
+    <string name="brief">Brief</string>
 </resources>

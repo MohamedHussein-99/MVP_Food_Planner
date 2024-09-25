@@ -1,10 +1,10 @@
 package com.example.mvp_food_planner.Network;
 
-import com.example.mvp_food_planner.Model.CategoryFilter;
-import com.example.mvp_food_planner.Model.CountryFilter;
+import com.example.mvp_food_planner.Model.POJO.CategoryFilter;
+import com.example.mvp_food_planner.Model.POJO.CountryFilter;
 import com.example.mvp_food_planner.Model.Entity.Meal;
 import com.example.mvp_food_planner.Model.GenericeResponse;
-import com.example.mvp_food_planner.Model.IngredientFilter;
+import com.example.mvp_food_planner.Model.POJO.IngredientFilter;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

@@ -2,15 +2,23 @@ package com.example.mvp_food_planner.Model.Entity;
 
 // recipe Table
 
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
+
+import com.example.mvp_food_planner.Model.POJO.MealConverter;
 
 @Entity(tableName = "recipe_table")
 public class Meal {
+
     @PrimaryKey
+    @NonNull
     public String idMeal;
     public String strMeal;
-    public Object strDrinkAlternate;
+
+    //@TypeConverters(MealConverter.class)
+    //public Object strDrinkAlternate;
     public String strCategory;
     public String strArea;
     public String strInstructions;
@@ -57,15 +65,23 @@ public class Meal {
     public String strMeasure18;
     public String strMeasure19;
     public String strMeasure20;
-    public String strSource;
+
+  /*  public String strSource;
     public Object strImageSource;
     public Object strCreativeCommonsConfirmed;
     public Object dateModified;
 
-    public Meal(String idMeal, String strMeal, Object strDrinkAlternate, String strCategory, String strArea, String strInstructions, String strMealThumb, String strTags, String strYoutube, String strIngredient1, String strIngredient2, String strIngredient3, String strIngredient4, String strIngredient5, String strIngredient6, String strIngredient7, String strIngredient8, String strIngredient9, String strIngredient10, String strIngredient11, String strIngredient12, String strIngredient13, String strIngredient14, String strIngredient15, String strIngredient16, String strIngredient17, String strIngredient18, String strIngredient19, String strIngredient20, String strMeasure1, String strMeasure2, String strMeasure3, String strMeasure4, String strMeasure5, String strMeasure6, String strMeasure7, String strMeasure8, String strMeasure9, String strMeasure10, String strMeasure11, String strMeasure12, String strMeasure13, String strMeasure14, String strMeasure15, String strMeasure16, String strMeasure17, String strMeasure18, String strMeasure19, String strMeasure20, String strSource, Object strImageSource, Object strCreativeCommonsConfirmed, Object dateModified) {
+   */
+
+    public Meal() {
+    }
+
+    public Meal(String idMeal, String strMeal, String strCategory, String strArea, String strInstructions, String strMealThumb, String strTags, String strYoutube, String strIngredient1, String strIngredient2, String strIngredient3, String strIngredient4, String strIngredient5, String strIngredient6, String strIngredient7, String strIngredient8, String strIngredient9, String strIngredient10, String strIngredient11, String strIngredient12, String strIngredient13, String strIngredient14, String strIngredient15, String strIngredient16, String strIngredient17, String strIngredient18, String strIngredient19, String strIngredient20, String strMeasure1, String strMeasure2, String strMeasure3, String strMeasure4, String strMeasure5, String strMeasure6, String strMeasure7, String strMeasure8, String strMeasure9, String strMeasure10, String strMeasure11, String strMeasure12, String strMeasure13, String strMeasure14, String strMeasure15, String strMeasure16, String strMeasure17, String strMeasure18, String strMeasure19, String strMeasure20, String strSource) {
+
+    //public Meal(String idMeal, String strMeal, Object strDrinkAlternate, String strCategory, String strArea, String strInstructions, String strMealThumb, String strTags, String strYoutube, String strIngredient1, String strIngredient2, String strIngredient3, String strIngredient4, String strIngredient5, String strIngredient6, String strIngredient7, String strIngredient8, String strIngredient9, String strIngredient10, String strIngredient11, String strIngredient12, String strIngredient13, String strIngredient14, String strIngredient15, String strIngredient16, String strIngredient17, String strIngredient18, String strIngredient19, String strIngredient20, String strMeasure1, String strMeasure2, String strMeasure3, String strMeasure4, String strMeasure5, String strMeasure6, String strMeasure7, String strMeasure8, String strMeasure9, String strMeasure10, String strMeasure11, String strMeasure12, String strMeasure13, String strMeasure14, String strMeasure15, String strMeasure16, String strMeasure17, String strMeasure18, String strMeasure19, String strMeasure20, String strSource, Object strImageSource, Object strCreativeCommonsConfirmed, Object dateModified) {
         this.idMeal = idMeal;
         this.strMeal = strMeal;
-        this.strDrinkAlternate = strDrinkAlternate;
+        //this.strDrinkAlternate = strDrinkAlternate;
         this.strCategory = strCategory;
         this.strArea = strArea;
         this.strInstructions = strInstructions;
@@ -112,10 +128,13 @@ public class Meal {
         this.strMeasure18 = strMeasure18;
         this.strMeasure19 = strMeasure19;
         this.strMeasure20 = strMeasure20;
+        /*
         this.strSource = strSource;
         this.strImageSource = strImageSource;
         this.strCreativeCommonsConfirmed = strCreativeCommonsConfirmed;
         this.dateModified = dateModified;
+
+         */
     }
 
     public String getIdMeal() {
@@ -133,7 +152,7 @@ public class Meal {
     public void setStrMeal(String strMeal) {
         this.strMeal = strMeal;
     }
-
+/*
     public Object getStrDrinkAlternate() {
         return strDrinkAlternate;
     }
@@ -141,7 +160,7 @@ public class Meal {
     public void setStrDrinkAlternate(Object strDrinkAlternate) {
         this.strDrinkAlternate = strDrinkAlternate;
     }
-
+*/
     public String getStrCategory() {
         return strCategory;
     }
@@ -510,6 +529,7 @@ public class Meal {
         this.strMeasure20 = strMeasure20;
     }
 
+    /*
     public String getStrSource() {
         return strSource;
     }
@@ -541,4 +561,6 @@ public class Meal {
     public void setDateModified(Object dateModified) {
         this.dateModified = dateModified;
     }
+
+     */
 }

@@ -3,20 +3,11 @@ package com.example.mvp_food_planner;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.airbnb.lottie.LottieAnimationView;
-import com.example.mvp_food_planner.Model.CategoryFilter;
-import com.example.mvp_food_planner.Model.CountryFilter;
-import com.example.mvp_food_planner.Model.Entity.Meal;
-import com.example.mvp_food_planner.Model.IngredientFilter;
-import com.example.mvp_food_planner.Network.Client;
-import com.example.mvp_food_planner.Network.NetworkCallback;
-
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 

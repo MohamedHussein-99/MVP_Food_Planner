@@ -1,4 +1,4 @@
-package com.example.mvp_food_planner.View;
+package com.example.mvp_food_planner.Screens;
 
 import android.os.Bundle;
 
@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import com.example.mvp_food_planner.R;
 
 
-public class FavFragment extends Fragment {
+public class plannerFragment extends Fragment {
 
 
 
@@ -25,6 +25,6 @@ public class FavFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_fav, container, false);
+        return inflater.inflate(R.layout.fragment_planner, container, false);
     }
 }

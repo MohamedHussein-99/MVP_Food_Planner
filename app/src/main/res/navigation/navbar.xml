@@ -7,17 +7,17 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.example.mvp_food_planner.View.HomeFragment"
+        android:name="com.example.mvp_food_planner.Screens.HomeScreen.View.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" />
     <fragment
         android:id="@+id/favFragment"
-        android:name="com.example.mvp_food_planner.View.FavFragment"
+        android:name="com.example.mvp_food_planner.Screens.FavFragment"
         android:label="fragment_fav"
         tools:layout="@layout/fragment_fav" />
     <fragment
         android:id="@+id/plannerFragment"
-        android:name="com.example.mvp_food_planner.View.plannerFragment"
+        android:name="com.example.mvp_food_planner.Screens.plannerFragment"
         android:label="fragment_planner"
         tools:layout="@layout/fragment_planner" />
 </navigation>

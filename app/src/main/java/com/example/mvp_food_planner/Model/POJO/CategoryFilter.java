@@ -1,4 +1,4 @@
-package com.example.mvp_food_planner.Model;
+package com.example.mvp_food_planner.Model.POJO;
 
 public class CategoryFilter {
     public String idCategory;
