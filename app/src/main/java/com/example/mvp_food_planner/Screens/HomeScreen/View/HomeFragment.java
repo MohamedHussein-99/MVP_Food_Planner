@@ -6,7 +6,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,10 +27,9 @@ public class HomeFragment extends Fragment implements HomeView, RandomMealAdapte
     private HomePresenter presenter;
     private RandomMealAdapter mealAdapter;
     private List<Meal> randomMeals = new ArrayList<>();
-
-    public HomeFragment() {
-        // Required empty public constructor
-    }
+    private List<CategoryFilter> categories = new ArrayList<>();
+    private CategoryAdapter categoryAdapter;
+    public HomeFragment() {    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -49,9 +47,15 @@ public class HomeFragment extends Fragment implements HomeView, RandomMealAdapte
         RecyclerView mealRecyclerView = view.findViewById(R.id.recyclerRandomMeal);
         mealAdapter = new RandomMealAdapter(getContext(), randomMeals, this);
         mealRecyclerView.setNestedScrollingEnabled(false); // Disable nested scrolling
-
         mealRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         mealRecyclerView.setAdapter(mealAdapter);
+
+        // Setup categories RecyclerView
+        RecyclerView categoryRecyclerView = view.findViewById(R.id.recyclerCategory);
+        categoryAdapter = new CategoryAdapter(getContext(), categories);
+        categoryRecyclerView.setNestedScrollingEnabled(false); // Disable nested scrolling
+        categoryRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        categoryRecyclerView.setAdapter(categoryAdapter);
 
         return view;
     }
@@ -65,7 +69,9 @@ public class HomeFragment extends Fragment implements HomeView, RandomMealAdapte
 
     @Override
     public void getCategories(List<CategoryFilter> categories) {
-        // Handle updating the categories RecyclerView
+        this.categories.clear();
+        this.categories.addAll(categories);
+        categoryAdapter.notifyDataSetChanged();
     }
 
     @Override
