@@ -1,5 +1,6 @@
 package com.example.mvp_food_planner.Screens.HomeScreen.View;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -14,6 +15,7 @@ import android.widget.Toast;
 import com.example.mvp_food_planner.Model.Entity.Meal;
 import com.example.mvp_food_planner.Model.POJO.CategoryFilter;
 import com.example.mvp_food_planner.Model.POJO.CountryFilter;
+import com.example.mvp_food_planner.Model.Repo.Repo;
 import com.example.mvp_food_planner.Network.Client;
 import com.example.mvp_food_planner.R;
 import com.example.mvp_food_planner.Screens.HomeScreen.Presenter.HomePresenter;
@@ -34,9 +36,10 @@ public class HomeFragment extends Fragment implements HomeView, RandomMealAdapte
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        presenter = new HomePresenter(this, new Client());
+        Repo repo = new Repo();  // Create Repo instance
+        presenter = new HomePresenter(this, repo);  // Pass Repo to presenter
         presenter.getCategories();
-        presenter.getRandomMeals(5); // Fetch 5 random meals
+        presenter.getRandomMeals(5);
         presenter.getCountries();
     }
 
@@ -60,6 +63,7 @@ public class HomeFragment extends Fragment implements HomeView, RandomMealAdapte
         return view;
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     @Override
     public void getRandMeal(List<Meal> meals) {
         this.randomMeals.clear();
@@ -67,6 +71,7 @@ public class HomeFragment extends Fragment implements HomeView, RandomMealAdapte
         mealAdapter.notifyDataSetChanged();
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     @Override
     public void getCategories(List<CategoryFilter> categories) {
         this.categories.clear();
@@ -87,6 +92,9 @@ public class HomeFragment extends Fragment implements HomeView, RandomMealAdapte
     @Override
     public void onMealClicked(Meal meal) {
         Toast.makeText(getContext(), meal.getStrMeal(), Toast.LENGTH_SHORT).show();
+//        Bundle bundle = new Bundle();
+//        Bundle.putString("mealId", meal.idMeal);
+
     }
 }
 

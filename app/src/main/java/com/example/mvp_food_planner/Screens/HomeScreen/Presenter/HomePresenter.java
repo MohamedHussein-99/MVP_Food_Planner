@@ -1,12 +1,9 @@
 package com.example.mvp_food_planner.Screens.HomeScreen.Presenter;
 
-import android.util.Log;
-
 import com.example.mvp_food_planner.Model.Entity.Meal;
 import com.example.mvp_food_planner.Model.POJO.CategoryFilter;
 import com.example.mvp_food_planner.Model.POJO.CountryFilter;
 import com.example.mvp_food_planner.Model.Repo.Repo;
-import com.example.mvp_food_planner.Network.Client;
 import com.example.mvp_food_planner.Network.NetworkCallback;
 import com.example.mvp_food_planner.Screens.HomeScreen.View.HomeView;
 
@@ -16,12 +13,13 @@ public class HomePresenter {
     private final HomeView view;
     private final Repo repository;
 
-    public HomePresenter(HomeView view, Client client) {
+    //  constructor to take Repo directly
+    public HomePresenter(HomeView view, Repo repository) {
         this.view = view;
-        this.repository = new Repo();
+        this.repository = repository;
     }
 
-    // count bec, it was fetching one element only
+    // Count parameter to fetch multiple meals instead of one
     public void getRandomMeals(int count) {
         repository.fetchRandomMeals(count, new NetworkCallback<Meal>() {
             @Override
@@ -64,4 +62,3 @@ public class HomePresenter {
         });
     }
 }
-
