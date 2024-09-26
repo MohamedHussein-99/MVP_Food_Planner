@@ -20,7 +20,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="36dp"
                 android:fontFamily="@font/hachi_maru_pop"
                 android:text="@string/dailysuggest"
                 android:textColor="#7E102C"
@@ -31,8 +31,8 @@
 
             <com.airbnb.lottie.LottieAnimationView
                 android:id="@+id/lottieRandomFood"
-                android:layout_width="74dp"
-                android:layout_height="57dp"
+                android:layout_width="82dp"
+                android:layout_height="78dp"
                 android:layout_marginStart="6dp"
                 android:layout_marginTop="7dp"
                 app:layout_constraintBottom_toTopOf="@+id/recyclerRandomMeal"
@@ -45,12 +45,11 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerRandomMeal"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="22dp"
                 android:nestedScrollingEnabled="false"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtDailySuggest" />
+                app:layout_constraintTop_toBottomOf="@+id/lottieRandomFood" />
 
             <TextView
                 android:id="@+id/txtCuisines"

@@ -1,6 +1,8 @@
 // app/src/main/java/com/example/mvp_food_planner/Network/Client.java
 package com.example.mvp_food_planner.Network;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
 import com.example.mvp_food_planner.Model.POJO.CategoryFilter;
@@ -36,13 +38,14 @@ public class Client {
         return client;
     }
 
-    // Generic method to handle different requests
-    // add a boolean parameter to differentiate between the two types of requests , to avoid category error
+    // Generic method to fetch data from the API
+    // Boolean isCategory is used to differentiate between categories and meals to avoid error
     private <T> void fetchData(Call<GenericeResponse<T>> call, NetworkCallback<T> callback, boolean isCategory) {
         call.enqueue(new Callback<GenericeResponse<T>>() {
             @Override
             public void onResponse(@NonNull Call<GenericeResponse<T>> call, @NonNull retrofit2.Response<GenericeResponse<T>> response) {
                 if (response.isSuccessful() && response.body() != null) {
+                    Log.d(TAG, "Raw response: " + response.body().toString());
                     if (isCategory && response.body().getCategories() != null) {
                         callback.onSuccess(response.body().getCategories());
                     } else if (!isCategory && response.body().getMeals() != null) {
@@ -63,11 +66,11 @@ public class Client {
     }
 
     public void getCategoriesList(NetworkCallback<CategoryFilter> callback) {
-        fetchData(service.getCategories(), callback , true);
+        fetchData(service.getCategories(), callback, true);
     }
 
     public void getIngredientsList(NetworkCallback<IngredientFilter> callback) {
-        fetchData(service.getIngredients(), callback , false);
+        fetchData(service.getIngredients(), callback, false);
     }
 
     public void getCountriesList(NetworkCallback<CountryFilter> callback) {

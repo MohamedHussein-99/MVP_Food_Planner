@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,7 +38,7 @@ public class HomeFragment extends Fragment implements HomeView, RandomMealAdapte
         super.onCreate(savedInstanceState);
         presenter = new HomePresenter(this, new Client());
         presenter.getCategories();
-        presenter.getRandomMeal();
+        presenter.getRandomMeals(5); // Fetch 5 random meals
         presenter.getCountries();
     }
 
@@ -51,8 +52,6 @@ public class HomeFragment extends Fragment implements HomeView, RandomMealAdapte
 
         mealRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         mealRecyclerView.setAdapter(mealAdapter);
-
-        // Setup other recyclers for categories and countries similarly if needed
 
         return view;
     }
@@ -69,7 +68,6 @@ public class HomeFragment extends Fragment implements HomeView, RandomMealAdapte
         // Handle updating the categories RecyclerView
     }
 
-
     @Override
     public void getCountry(List<CountryFilter> countries) {
         // Handle updating the countries RecyclerView
@@ -84,7 +82,5 @@ public class HomeFragment extends Fragment implements HomeView, RandomMealAdapte
     public void onMealClicked(Meal meal) {
         Toast.makeText(getContext(), meal.getStrMeal(), Toast.LENGTH_SHORT).show();
     }
-
-
 }
 

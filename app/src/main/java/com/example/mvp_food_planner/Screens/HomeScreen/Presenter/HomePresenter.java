@@ -1,5 +1,7 @@
 package com.example.mvp_food_planner.Screens.HomeScreen.Presenter;
 
+import android.util.Log;
+
 import com.example.mvp_food_planner.Model.Entity.Meal;
 import com.example.mvp_food_planner.Model.POJO.CategoryFilter;
 import com.example.mvp_food_planner.Model.POJO.CountryFilter;
@@ -19,8 +21,9 @@ public class HomePresenter {
         this.repository = new Repo();
     }
 
-    public void getRandomMeal() {
-        repository.fetchRandomMeal(new NetworkCallback<Meal>() {
+    // count bec, it was fetching one element only
+    public void getRandomMeals(int count) {
+        repository.fetchRandomMeals(count, new NetworkCallback<Meal>() {
             @Override
             public void onSuccess(List<Meal> meals) {
                 view.getRandMeal(meals);

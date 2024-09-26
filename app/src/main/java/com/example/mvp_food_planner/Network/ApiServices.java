@@ -21,6 +21,6 @@ public interface ApiServices {
     @GET("list.php?a=list")
     Call<GenericeResponse<CountryFilter>> getCountries();
 
-    @GET("random.php")
+    @GET("random.php?count=5") // get 5 rand elements
     Call<GenericeResponse<Meal>> getMeal();
 }
