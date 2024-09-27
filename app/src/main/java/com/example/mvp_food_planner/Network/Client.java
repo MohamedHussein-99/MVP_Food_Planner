@@ -80,4 +80,28 @@ public class Client {
     public void getRandomMeal(NetworkCallback<Meal> callback) {
         fetchData(service.getMeal(), callback, false);
     }
+
+    // Generic method for fetching a single item by ID
+    private <T> void fetchById(Call<GenericeResponse<T>> call, NetworkCallback<T> callback) {
+        call.enqueue(new Callback<GenericeResponse<T>>() {
+            @Override
+            public void onResponse(@NonNull Call<GenericeResponse<T>> call, @NonNull retrofit2.Response<GenericeResponse<T>> response) {
+                if (response.isSuccessful() && response.body() != null && response.body().getMeals() != null) {
+                    callback.onSuccess(response.body().getMeals());
+                } else {
+                    callback.onFailure("Failed to get item by ID");
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<GenericeResponse<T>> call, @NonNull Throwable throwable) {
+                callback.onFailure(throwable.getMessage());
+            }
+        });
+    }
+
+    public void getMealById(String mealId, NetworkCallback<Meal> callback) {
+        Call<GenericeResponse<Meal>> call = service.getMealById(mealId);
+        fetchById(call, callback); // Use the generic fetchById method
+    }
 }

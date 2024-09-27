@@ -19,6 +19,7 @@ import com.example.mvp_food_planner.Model.Repo.Repo;
 import com.example.mvp_food_planner.Network.Client;
 import com.example.mvp_food_planner.R;
 import com.example.mvp_food_planner.Screens.HomeScreen.Presenter.HomePresenter;
+import com.example.mvp_food_planner.Screens.MealDetailsScreen.View.MealDetailsFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +38,7 @@ public class HomeFragment extends Fragment implements HomeView, RandomMealAdapte
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Repo repo = new Repo();  // Create Repo instance
-        presenter = new HomePresenter(this, repo);  // Pass Repo to presenter
+        presenter = new HomePresenter(this, repo);  // use new repo , to abstract with presenter , now presenter has no use
         presenter.getCategories();
         presenter.getRandomMeals(5);
         presenter.getCountries();
@@ -91,10 +92,20 @@ public class HomeFragment extends Fragment implements HomeView, RandomMealAdapte
 
     @Override
     public void onMealClicked(Meal meal) {
-        Toast.makeText(getContext(), meal.getStrMeal(), Toast.LENGTH_SHORT).show();
-//        Bundle bundle = new Bundle();
-//        Bundle.putString("mealId", meal.idMeal);
+        if (meal != null && meal.idMeal != null) {
+            Bundle bundle = new Bundle();
+            bundle.putString("mealId", meal.idMeal);
+            MealDetailsFragment detailsFragment = new MealDetailsFragment();
+            detailsFragment.setArguments(bundle);
 
+            getParentFragmentManager().beginTransaction()
+                    .replace(R.id.fragmentNav, detailsFragment)
+                    .addToBackStack(null)
+                    .commit();
+        } else {
+            Toast.makeText(getContext(), "Meal ID is missing", Toast.LENGTH_SHORT).show();
+        }
     }
+
 }
 

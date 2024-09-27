@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#E1D4C1"
+    tools:context=".Screens.MealDetailsScreen.View.MealDetailsFragment">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/txtRecipeTitle"
+                android:layout_width="181dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="112dp"
+                android:layout_marginTop="28dp"
+                android:text="@string/title"
+                android:textSize="34sp"
+                android:textStyle="bold|italic"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/imgMealDetails"
+                android:layout_width="324dp"
+                android:layout_height="247dp"
+                android:layout_marginStart="43dp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtRecipeTitle"
+                tools:src="@tools:sample/avatars" />
+
+            <TextView
+                android:id="@+id/txtIngrediant"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="104dp"
+                android:layout_marginTop="50dp"
+                android:fontFamily="@font/hachi_maru_pop"
+                android:text="@string/ingrediant"
+                android:textSize="28sp"
+                android:textStyle="bold|italic"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imgMealDetails" />
+
+
+            <WebView
+                android:id="@+id/videoView"
+                android:layout_width="318dp"
+                android:layout_height="318dp"
+                android:layout_marginStart="46dp"
+                android:layout_marginTop="28dp"
+                android:layout_marginBottom="12dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtVideo"
+                tools:ignore="WebViewLayout" />
+
+            <TextView
+                android:id="@+id/txtVideo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="76dp"
+                android:layout_marginTop="30dp"
+                android:fontFamily="@font/hachi_maru_pop"
+                android:text="@string/takelook"
+                android:textSize="28sp"
+                android:textStyle="bold|italic"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtInstructions" />
+
+            <TextView
+                android:id="@+id/txtInst"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="96dp"
+                android:layout_marginTop="26dp"
+                android:fontFamily="@font/hachi_maru_pop"
+                android:text="@string/ins"
+                android:textSize="28sp"
+                android:textStyle="bold|italic"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/recyclerIngrediant" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerIngrediant"
+                android:layout_width="345dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="33dp"
+                android:layout_marginTop="23dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtIngrediant" />
+
+            <TextView
+                android:id="@+id/txtInstructions"
+                android:layout_width="340dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="98dp"
+                android:text="@string/ins"
+                app:layout_constraintStart_toStartOf="@+id/recyclerIngrediant"
+                app:layout_constraintTop_toBottomOf="@+id/recyclerIngrediant" />
+
+            <TextView
+                android:id="@+id/txtCat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="152dp"
+                android:layout_marginTop="11dp"
+                android:text="@string/txtcountry"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imgMealDetails" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+</FrameLayout>

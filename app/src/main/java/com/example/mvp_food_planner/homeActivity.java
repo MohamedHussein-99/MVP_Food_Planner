@@ -7,9 +7,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.mvp_food_planner.Screens.FavFragment;
+import com.example.mvp_food_planner.Screens.FavScreen.FavFragment;
 import com.example.mvp_food_planner.Screens.HomeScreen.View.HomeFragment;
-import com.example.mvp_food_planner.Screens.plannerFragment;
+import com.example.mvp_food_planner.Screens.PlannerScreen.PlannerFragment;
 import com.example.mvp_food_planner.databinding.ActivityHomeBinding;
 
 public class homeActivity extends AppCompatActivity {
@@ -31,7 +31,7 @@ public class homeActivity extends AppCompatActivity {
             } else if (item.getItemId() == R.id.FavMenu) {
                 replaceFragment(new FavFragment());
             } else if (item.getItemId() == R.id.PlannerMenu) {
-                replaceFragment(new plannerFragment());
+                replaceFragment(new PlannerFragment());
             } else {
                 return false; // If no match, return false
             }
@@ -43,7 +43,7 @@ public class homeActivity extends AppCompatActivity {
     private void replaceFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.fragmentContainerView, fragment);
+        fragmentTransaction.replace(R.id.fragmentNav, fragment);
         fragmentTransaction.commit();
     }
 }

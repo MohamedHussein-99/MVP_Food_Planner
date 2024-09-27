@@ -9,4 +9,8 @@
     <string name="foodfiesta">Food Fiesta</string>
     <string name="title">Title</string>
     <string name="brief">Brief</string>
+    <string name="ingrediant">Ingrediants</string>
+    <string name="allingrediant">All Ingrediants</string>
+    <string name="takelook">Take A Look !</string>
+    <string name="ins">Instructions</string>
 </resources>

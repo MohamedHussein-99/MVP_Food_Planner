@@ -8,6 +8,7 @@ import com.example.mvp_food_planner.Model.POJO.IngredientFilter;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Query;
 
 public interface ApiServices {
     // Meal API
@@ -23,4 +24,8 @@ public interface ApiServices {
 
     @GET("random.php?count=5") // get 5 rand elements
     Call<GenericeResponse<Meal>> getMeal();
+
+    // meal by id
+    @GET("lookup.php")
+    Call<GenericeResponse<Meal>> getMealById(@Query("i") String mealId);
 }

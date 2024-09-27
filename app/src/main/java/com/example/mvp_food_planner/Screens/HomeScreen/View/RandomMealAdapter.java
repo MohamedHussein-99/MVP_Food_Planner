@@ -41,7 +41,7 @@ public class RandomMealAdapter extends RecyclerView.Adapter<RandomMealAdapter.Vi
         Meal meal = meals.get(position);
         holder.txtTitle.setText(meal.getStrMeal());
         holder.txtBrief.setText(meal.getStrCategory());
-        Glide.with(context).load(meal.getStrMealThumb()).into(holder.imgMeal);
+        Glide.with(context).load(meal.getStrMealThumb()).placeholder(R.drawable.ic_launcher_foreground).into(holder.imgMeal);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -56,9 +56,9 @@ public class RandomMealAdapter extends RecyclerView.Adapter<RandomMealAdapter.Vi
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-TextView txtTitle ;
-TextView txtBrief;
-ImageView imgMeal;
+        TextView txtTitle ;
+        TextView txtBrief;
+        ImageView imgMeal;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
