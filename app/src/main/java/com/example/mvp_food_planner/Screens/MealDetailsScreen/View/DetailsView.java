@@ -5,4 +5,5 @@ import com.example.mvp_food_planner.Model.Entity.Meal;
 public interface DetailsView {
     void showMealDetails(Meal meal);
     void showError(String error);
+    void setFavoriteState(boolean isFavorite); // set the favorite state of the meal
 }

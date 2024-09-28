@@ -22,4 +22,7 @@ public interface MealSavedDao {
 
     @Delete
     void deleteMeal(Meal Meal);
+
+    @Query("SELECT COUNT(*) > 0 FROM fav_meals_table WHERE idMeal = :mealId")
+    boolean isMealExists(String mealId);
 }

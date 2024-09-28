@@ -23,7 +23,12 @@ public class MealDetailsPresenter {
         client.getMealById(mealId, new NetworkCallback<Meal>() {
             @Override
             public void onSuccess(List<Meal> items) {
+                Meal meal = items.get(0);
                 view.showMealDetails(items.get(0));
+                // Check if the meal is already in the favorites and update the checkbox state
+                repository.isMealExists(meal.idMeal, isExists -> {
+                    view.setFavoriteState(isExists);
+                });
             }
 
             @Override

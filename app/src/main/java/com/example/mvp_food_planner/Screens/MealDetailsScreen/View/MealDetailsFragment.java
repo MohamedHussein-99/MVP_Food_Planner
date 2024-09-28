@@ -131,6 +131,11 @@ public class MealDetailsFragment extends Fragment implements DetailsView {
     }
 
     @Override
+    public void setFavoriteState(boolean isFavorite) {
+        cbHeart.setChecked(isFavorite);
+    }
+
+    @Override
     public void showError(String error) {
         Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show();
     }
