@@ -55,12 +55,12 @@ public class FavAdapter extends RecyclerView.Adapter<FavAdapter.FavViewHolder>  
                 }
             }
         });
-//        holder.itemView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                mealClickListener.onMealClicked(meal);
-//            }
-//        });
+        // Set the listener for item clicks (navigate to meal details)
+        holder.itemView.setOnClickListener(v -> {
+            if (listener != null) {
+                listener.onMealClicked(meal);  // Notify listener to display meal details
+            }
+        });
 
     }
 
