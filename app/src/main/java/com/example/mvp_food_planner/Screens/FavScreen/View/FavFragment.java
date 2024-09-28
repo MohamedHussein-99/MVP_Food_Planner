@@ -28,7 +28,7 @@ public class FavFragment extends Fragment implements FavoritesView, FavoriteList
     RecyclerView recyclerView;
     FavAdapter adapter;
     FavPresenter presenter;
-    CheckBox cbHeart;
+    //CheckBox cbHeart;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -56,7 +56,7 @@ public class FavFragment extends Fragment implements FavoritesView, FavoriteList
 
     @Override
     public void showFavoriteMeals(List<Meal> meals) {
-        adapter = new FavAdapter(meals, getContext());
+        adapter = new FavAdapter(meals, getContext(),this);
         recyclerView.setAdapter(adapter);
     }
 

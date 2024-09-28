@@ -19,18 +19,20 @@
 
     <CheckBox
         android:id="@+id/cbHeart2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="60dp"
+        android:layout_height="64dp"
+        android:layout_marginEnd="16dp"
         android:button="@drawable/selector_wishlist_item"
-        app:layout_constraintStart_toStartOf="@+id/imgfav"
-        app:layout_constraintTop_toTopOf="@+id/imgfav"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:useMaterialThemeColors="false" />
 
     <TextView
         android:id="@+id/txtfavtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="27dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="36dp"
         android:text="@string/title"
         android:textSize="28sp"
         android:textStyle="bold|italic"
@@ -41,7 +43,7 @@
         android:id="@+id/txtfavcat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="12dp"
         android:text="@string/brief"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="@+id/txtfavtitle"

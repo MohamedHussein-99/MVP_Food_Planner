@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -20,11 +21,14 @@ import java.util.List;
 public class FavAdapter extends RecyclerView.Adapter<FavAdapter.FavViewHolder>  {
     private List<Meal> meals ;
     private Context context;
+    private FavoriteListener listener;
    // private RandomMealAdapter.MealClickListener mealClickListener;
 
-    public FavAdapter(List<Meal> meals, Context context) {
+    public FavAdapter(List<Meal> meals, Context context, FavoriteListener listener) {
         this.meals = meals;
         this.context = context;
+        this.listener = listener;
+
         //this.mealClickListener = listener;
     }
 
@@ -43,6 +47,14 @@ public class FavAdapter extends RecyclerView.Adapter<FavAdapter.FavViewHolder>  
         holder.txtfavtitle.setText(meal.getStrMeal());
         holder.txtfavcat.setText(meal.getStrCategory()+" - "+meal.getStrArea());
         Glide.with(context).load(meal.getStrMealThumb()).placeholder(R.drawable.ic_launcher_foreground).into(holder.imgfav);
+        holder.cbHeart2.setChecked(true); // set the checkbox to checked by default
+        holder.cbHeart2.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (listener != null) {  // Ensure listener is not null
+                if (!isChecked) {
+                    listener.onRemoveFromSaved(meal);  // Notify the listener to remove the meal
+                }
+            }
+        });
 //        holder.itemView.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
@@ -65,6 +77,7 @@ public class FavAdapter extends RecyclerView.Adapter<FavAdapter.FavViewHolder>  
     public class FavViewHolder extends RecyclerView.ViewHolder {
         private TextView txtfavtitle , txtfavcat;
         private ImageView imgfav;
+        private CheckBox cbHeart2;
 
 
         public FavViewHolder(@NonNull View itemView) {
@@ -72,6 +85,7 @@ public class FavAdapter extends RecyclerView.Adapter<FavAdapter.FavViewHolder>  
             txtfavtitle = itemView.findViewById(R.id.txtfavtitle);
             txtfavcat = itemView.findViewById(R.id.txtfavcat);
             imgfav = itemView.findViewById(R.id.imgfav);
+            cbHeart2 = itemView.findViewById(R.id.cbHeart2);
         }
     }
     public void updateData(List<Meal> meals) {
