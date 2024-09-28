@@ -1,34 +1,41 @@
 package com.example.mvp_food_planner.Model.Repo;
 
 import android.content.Context;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 
-import com.example.mvp_food_planner.DataBase.MealDao;
+import com.example.mvp_food_planner.DataBase.MealSavedDao;
 import com.example.mvp_food_planner.DataBase.MealsDataBase;
 import com.example.mvp_food_planner.Model.Entity.Meal;
 
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class MealLocalRepository {
-    private MealDao mealDao;
-    private LiveData<List<Meal>> allMeals;
+    private MealSavedDao mealSaveDAO;
+    private final ExecutorService executorService;
 
     public MealLocalRepository(Context context) {
         MealsDataBase db = MealsDataBase.getInstance(context);
-        mealDao = db.getMealDao();
-        allMeals = mealDao.getAllMeals();
+        mealSaveDAO = db.getMealDao();
+        executorService = Executors.newSingleThreadExecutor();
     }
 
-    public LiveData<List<Meal>> getAllMeals() {
-        return allMeals;
+    public LiveData<List<Meal>> getSavedMeals() {
+        return mealSaveDAO.getMeals();
     }
 
-    public void insert(Meal meal) {
-        MealsDataBase.databaseWriteExecutor.execute(() -> mealDao.insert(meal));
+    public void insertSavedMeal(Meal meal) {
+        executorService.execute(() ->{
+            Log.d("MealLocalRepository", "Inserting meal: " + meal.strMeal);
+            mealSaveDAO.insert(meal);
+        });
     }
 
-    public void delete(Meal meal) {
-        MealsDataBase.databaseWriteExecutor.execute(() -> mealDao.deleteMeal(meal));
+    public void deleteSavedMeal(Meal meal) {
+        executorService.execute(() -> mealSaveDAO.deleteMeal(meal));
     }
+
 }

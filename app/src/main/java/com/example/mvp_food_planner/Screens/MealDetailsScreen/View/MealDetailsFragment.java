@@ -39,6 +39,7 @@ public class MealDetailsFragment extends Fragment implements DetailsView {
     private RecyclerView recyclerView;
     private MealDetailsAdapter adapter;
     private CheckBox cbHeart;
+    private Meal meal;
 
     //@SuppressLint("WrongViewCast")
     @Override
@@ -62,7 +63,6 @@ public class MealDetailsFragment extends Fragment implements DetailsView {
         recyclerView.setAdapter(adapter);
 
         Bundle bundle = getArguments();
-        Meal meal = new Meal();
         if (bundle != null) {
             String mealId = bundle.getString("mealId");
             if (mealId != null) {
@@ -70,29 +70,24 @@ public class MealDetailsFragment extends Fragment implements DetailsView {
             }
         }
         cbHeart.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            //Meal meal = // get the meal object being viewed
-            if (isChecked) {
-                presenter.saveMeal(meal);
-                Snackbar.make(view, "Meal added to favorites", Snackbar.LENGTH_LONG)
-                        .setAction("UNDO", v -> {
-                            cbHeart.setChecked(false);
-                            presenter.removeMeal(meal);
-                        }).show();
+            if (meal != null) {
+                if (isChecked) {
+                    presenter.saveMeal(meal);
+                    Toast.makeText(getContext(), "Meal saved to favorites", Toast.LENGTH_SHORT).show();
+                } else {
+                    presenter.deleteMeal(meal);
+                    Toast.makeText(getContext(), "Meal removed from favorites", Toast.LENGTH_SHORT).show();
+                }
             } else {
-                presenter.removeMeal(meal);
-                Snackbar.make(view, "Meal removed from favorites", Snackbar.LENGTH_LONG)
-                        .setAction("UNDO", v -> {
-                            cbHeart.setChecked(true);
-                            presenter.saveMeal(meal);
-                        }).show();
+                Toast.makeText(getContext(), "Meal is null", Toast.LENGTH_SHORT).show();
             }
         });
-
         return view;
     }
 
     @Override
     public void showMealDetails(Meal meal) {
+        this.meal = meal;
         Glide.with(getContext()).load(meal.strMealThumb)
                 .placeholder(R.drawable.ic_launcher_foreground)
                 .into(thumbnail);
@@ -126,6 +121,7 @@ public class MealDetailsFragment extends Fragment implements DetailsView {
         videoView.getSettings().setJavaScriptEnabled(true); // Enable JavaScript for the WebView to play the video
         String videoUrl = meal.strYoutube.replace("watch?v=", "embed/");
         videoView.loadUrl(videoUrl);
+
     }
 
     private void addIngredient(Map<String, String> ingredientsMap, String ingredient, String measure) {

@@ -9,7 +9,7 @@ import androidx.room.TypeConverters;
 
 import com.example.mvp_food_planner.Model.POJO.MealConverter;
 
-@Entity(tableName = "recipe_table")
+@Entity(tableName = "fav_meals_table")
 public class Meal {
 
     @PrimaryKey

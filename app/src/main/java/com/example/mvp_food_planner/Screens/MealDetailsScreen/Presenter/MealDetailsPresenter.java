@@ -32,17 +32,13 @@ public class MealDetailsPresenter {
             }
         });
     }
-    // detach the view to prevent memory leaks in case of activity or fragment destruction
-    public void detachView() {
-        this.view = null;
-    } // will be used at the end
 
     public void saveMeal(Meal meal) {
-        repository.insert(meal);
+        repository.insertSavedMeal(meal);
     }
 
-    public void removeMeal(Meal meal) {
-        repository.delete(meal);
+    public void deleteMeal(Meal meal) {
+        repository.deleteSavedMeal(meal);
     }
 
 }
