@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,9 +19,11 @@ import android.widget.VideoView;
 
 import com.bumptech.glide.Glide;
 import com.example.mvp_food_planner.Model.Entity.Meal;
+import com.example.mvp_food_planner.Model.Repo.MealLocalRepository;
 import com.example.mvp_food_planner.Network.Client;
 import com.example.mvp_food_planner.R;
 import com.example.mvp_food_planner.Screens.MealDetailsScreen.Presenter.MealDetailsPresenter;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -35,8 +38,9 @@ public class MealDetailsFragment extends Fragment implements DetailsView {
     private ImageView thumbnail;
     private RecyclerView recyclerView;
     private MealDetailsAdapter adapter;
+    private CheckBox cbHeart;
 
-    @SuppressLint("WrongViewCast")
+    //@SuppressLint("WrongViewCast")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -48,8 +52,9 @@ public class MealDetailsFragment extends Fragment implements DetailsView {
         videoView = view.findViewById(R.id.videoView);
         thumbnail = view.findViewById(R.id.imgMealDetails);
         recyclerView = view.findViewById(R.id.recyclerIngrediant);
+        cbHeart = view.findViewById(R.id.cbHeart);
 
-        presenter = new MealDetailsPresenter(this, new Client());
+        presenter = new MealDetailsPresenter(this, new Client() , new MealLocalRepository(getContext()));
 
         // setup recycler view
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -57,12 +62,32 @@ public class MealDetailsFragment extends Fragment implements DetailsView {
         recyclerView.setAdapter(adapter);
 
         Bundle bundle = getArguments();
+        Meal meal = new Meal();
         if (bundle != null) {
             String mealId = bundle.getString("mealId");
             if (mealId != null) {
                 presenter.getMealDetails(mealId);
             }
         }
+        cbHeart.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            //Meal meal = // get the meal object being viewed
+            if (isChecked) {
+                presenter.saveMeal(meal);
+                Snackbar.make(view, "Meal added to favorites", Snackbar.LENGTH_LONG)
+                        .setAction("UNDO", v -> {
+                            cbHeart.setChecked(false);
+                            presenter.removeMeal(meal);
+                        }).show();
+            } else {
+                presenter.removeMeal(meal);
+                Snackbar.make(view, "Meal removed from favorites", Snackbar.LENGTH_LONG)
+                        .setAction("UNDO", v -> {
+                            cbHeart.setChecked(true);
+                            presenter.saveMeal(meal);
+                        }).show();
+            }
+        });
+
         return view;
     }
 

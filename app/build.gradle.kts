@@ -56,6 +56,8 @@ dependencies {
     // Room
     implementation ("androidx.room:room-runtime:2.6.1")
     annotationProcessor ("androidx.room:room-compiler:2.6.1")
+    // live data
+    implementation ("androidx.lifecycle:lifecycle-extensions:2.2.0")
     // lotti and nav
     implementation ("com.airbnb.android:lottie:6.1.0")
     implementation ("pl.droidsonroids.gif:android-gif-drawable:1.2.22")
