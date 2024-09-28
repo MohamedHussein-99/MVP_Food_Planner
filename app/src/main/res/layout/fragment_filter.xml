@@ -3,12 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Screens.FavScreen.View.FavFragment">
+    tools:context=".Screens.FilterScreen.View.FilterFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/txtcountry" />
+        android:text="@string/hello_blank_fragment" />
 
 </FrameLayout>

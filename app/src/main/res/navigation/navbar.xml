@@ -12,7 +12,7 @@
         tools:layout="@layout/fragment_home" />
     <fragment
         android:id="@+id/favFragment"
-        android:name="com.example.mvp_food_planner.Screens.FavScreen.FavFragment"
+        android:name="com.example.mvp_food_planner.Screens.FavScreen.View.FavFragment"
         android:label="fragment_fav"
         tools:layout="@layout/fragment_fav" />
     <fragment
@@ -20,4 +20,9 @@
         android:name="com.example.mvp_food_planner.Screens.PlannerScreen.PlannerFragment"
         android:label="fragment_planner"
         tools:layout="@layout/fragment_planner" />
+    <fragment
+        android:id="@+id/filterFragment"
+        android:name="com.example.mvp_food_planner.Screens.PlannerScreen.PlannerFragment"
+        android:label="fragment_planner"
+        tools:layout="@layout/fragment_filter" />
 </navigation>

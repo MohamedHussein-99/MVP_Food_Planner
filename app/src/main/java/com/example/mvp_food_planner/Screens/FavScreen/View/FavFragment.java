@@ -1,4 +1,4 @@
-package com.example.mvp_food_planner.Screens.FavScreen;
+package com.example.mvp_food_planner.Screens.FavScreen.View;
 
 import android.os.Bundle;
 

@@ -14,4 +14,7 @@
     <item android:title="FavMenu"
         android:id="@+id/FavMenu"
         android:icon="@drawable/baseline_favorite_24"/>
+    <item android:title="FilterMenu"
+        android:id="@+id/FilterMenu"
+        android:icon="@drawable/baseline_filter_list_alt_24"/>
 </menu>

@@ -7,7 +7,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.mvp_food_planner.Screens.FavScreen.FavFragment;
+import com.example.mvp_food_planner.Screens.FavScreen.View.FavFragment;
+import com.example.mvp_food_planner.Screens.FilterScreen.View.FilterFragment;
 import com.example.mvp_food_planner.Screens.HomeScreen.View.HomeFragment;
 import com.example.mvp_food_planner.Screens.PlannerScreen.PlannerFragment;
 import com.example.mvp_food_planner.databinding.ActivityHomeBinding;
@@ -32,6 +33,8 @@ public class homeActivity extends AppCompatActivity {
                 replaceFragment(new FavFragment());
             } else if (item.getItemId() == R.id.PlannerMenu) {
                 replaceFragment(new PlannerFragment());
+            } else if (item.getItemId() == R.id.FilterMenu){
+                replaceFragment(new FilterFragment());
             } else {
                 return false; // If no match, return false
             }
