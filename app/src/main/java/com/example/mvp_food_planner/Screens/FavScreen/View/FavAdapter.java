@@ -17,15 +17,15 @@ import com.example.mvp_food_planner.Screens.HomeScreen.View.RandomMealAdapter;
 
 import java.util.List;
 
-public class FavAdapter extends RecyclerView.Adapter<FavAdapter.FavViewHolder> implements RandomMealAdapter.MealClickListener {
+public class FavAdapter extends RecyclerView.Adapter<FavAdapter.FavViewHolder>  {
     private List<Meal> meals ;
     private Context context;
-    private RandomMealAdapter.MealClickListener mealClickListener;
+   // private RandomMealAdapter.MealClickListener mealClickListener;
 
-    public FavAdapter(List<Meal> meals, Context context, RandomMealAdapter.MealClickListener listener) {
+    public FavAdapter(List<Meal> meals, Context context) {
         this.meals = meals;
         this.context = context;
-        this.mealClickListener = listener;
+        //this.mealClickListener = listener;
     }
 
     @NonNull
@@ -43,12 +43,12 @@ public class FavAdapter extends RecyclerView.Adapter<FavAdapter.FavViewHolder> i
         holder.txtfavtitle.setText(meal.getStrMeal());
         holder.txtfavcat.setText(meal.getStrCategory()+" - "+meal.getStrArea());
         Glide.with(context).load(meal.getStrMealThumb()).placeholder(R.drawable.ic_launcher_foreground).into(holder.imgfav);
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mealClickListener.onMealClicked(meal);
-            }
-        });
+//        holder.itemView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                mealClickListener.onMealClicked(meal);
+//            }
+//        });
 
     }
 
@@ -57,14 +57,15 @@ public class FavAdapter extends RecyclerView.Adapter<FavAdapter.FavViewHolder> i
         return meals.size();
     }
 
-    @Override
-    public void onMealClicked(Meal meal) {
-
-    }
+//    @Override
+//    public void onMealClicked(Meal meal) {
+//
+//    }
 
     public class FavViewHolder extends RecyclerView.ViewHolder {
         private TextView txtfavtitle , txtfavcat;
         private ImageView imgfav;
+
 
         public FavViewHolder(@NonNull View itemView) {
             super(itemView);

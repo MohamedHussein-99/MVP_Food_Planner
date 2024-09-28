@@ -2,6 +2,7 @@ package com.example.mvp_food_planner.Screens.FavScreen.Presenter;
 
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
 
 import com.example.mvp_food_planner.Model.Entity.Meal;
 import com.example.mvp_food_planner.Model.Repo.MealLocalRepository;
@@ -12,25 +13,25 @@ import java.util.List;
 public class FavPresenter {
     private FavoritesView view;
     private MealLocalRepository repository;
-    private LiveData<List<Meal>> favoriteMeals;
+
 
     public FavPresenter(FavoritesView view, MealLocalRepository repository) {
         this.view = view;
         this.repository = repository;
-        observeFavoriteMeals();
     }
 
-    // This method observes the favorite meals and updates the view when data changes
-    private void observeFavoriteMeals() {
-        favoriteMeals = repository.getSavedMeals(); // We will observe the LiveData here
-
-        // Observe LiveData for any changes and update the view accordingly
-        favoriteMeals.observe((LifecycleOwner) view, meals -> {
-            if (meals != null && !meals.isEmpty()) {
+    public void loadSavedMeals() {
+        LiveData<List<Meal>> savedList = repository.getSavedMeals();
+        savedList.observeForever(new Observer<List<Meal>>() {
+            @Override
+            public void onChanged(List<Meal> meals) {
                 view.showFavoriteMeals(meals);
-            } else {
-                view.showError("No favorite meals found");
             }
         });
     }
+
+    public void removeFromSaved(Meal meal) {
+        repository.deleteSavedMeal(meal);
+    }
+
 }
