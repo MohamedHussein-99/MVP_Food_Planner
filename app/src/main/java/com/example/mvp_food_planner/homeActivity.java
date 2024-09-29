@@ -10,7 +10,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.example.mvp_food_planner.Screens.FavScreen.View.FavFragment;
 import com.example.mvp_food_planner.Screens.FilterScreen.View.FilterFragment;
 import com.example.mvp_food_planner.Screens.HomeScreen.View.HomeFragment;
-import com.example.mvp_food_planner.Screens.PlannerScreen.PlannerFragment;
+import com.example.mvp_food_planner.Screens.PlannerScreen.View.PlannerFragment;
 import com.example.mvp_food_planner.databinding.ActivityHomeBinding;
 
 public class homeActivity extends AppCompatActivity {

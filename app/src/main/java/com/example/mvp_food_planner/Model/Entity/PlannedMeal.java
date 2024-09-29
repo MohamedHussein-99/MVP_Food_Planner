@@ -64,4 +64,12 @@ public class PlannedMeal {
     public String strMeasure18;
     public String strMeasure19;
     public String strMeasure20;
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
 }

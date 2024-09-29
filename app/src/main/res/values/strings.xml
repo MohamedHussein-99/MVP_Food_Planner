@@ -16,4 +16,5 @@
     <string name="fav">Favorite Meals</string>
     <string name="onthisday">On This Day</string>
     <string name="plannedmeals">Your Plan</string>
+    <string name="date">Date</string>
 </resources>

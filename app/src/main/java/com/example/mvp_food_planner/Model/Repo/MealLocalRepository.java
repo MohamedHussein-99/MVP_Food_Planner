@@ -58,10 +58,10 @@ public class MealLocalRepository {
     }
 
     // --- Planned Meals Methods ---
-
-    public LiveData<List<PlannedMeal>> getPlannedMealsForDay(Date day) {
-        return mealPlannedDao.getMealForDay(day);
+    public LiveData<List<PlannedMeal>> getPlannedMealsForDay(Date startOfDay, Date endOfDay) {
+        return mealPlannedDao.getMealForDay(startOfDay, endOfDay);
     }
+
 
     public void insertPlannedMeal(PlannedMeal meal) {
         executorService.execute(() -> mealPlannedDao.insertPLannedMeal(meal));
@@ -70,5 +70,5 @@ public class MealLocalRepository {
     public void deletePlannedMeal(PlannedMeal meal) {
         executorService.execute(() -> mealPlannedDao.deletePlannedMeal(meal));
     }
-
 }
+
