@@ -49,6 +49,18 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:useMaterialThemeColors="false" />
 
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/lottieCalender"
+                android:layout_width="77dp"
+                android:layout_height="58dp"
+                android:layout_marginStart="60dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintStart_toEndOf="@+id/txtCat"
+                app:layout_constraintTop_toBottomOf="@+id/imgMealDetails"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                app:lottie_rawRes="@raw/calenderpick" />
+
             <TextView
                 android:id="@+id/txtIngrediant"
                 android:layout_width="wrap_content"

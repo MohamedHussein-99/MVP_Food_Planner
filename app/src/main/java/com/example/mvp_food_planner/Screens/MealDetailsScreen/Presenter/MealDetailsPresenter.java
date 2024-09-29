@@ -1,11 +1,13 @@
 package com.example.mvp_food_planner.Screens.MealDetailsScreen.Presenter;
 
 import com.example.mvp_food_planner.Model.Entity.Meal;
+import com.example.mvp_food_planner.Model.Entity.PlannedMeal;
 import com.example.mvp_food_planner.Model.Repo.MealLocalRepository;
 import com.example.mvp_food_planner.Network.Client;
 import com.example.mvp_food_planner.Network.NetworkCallback;
 import com.example.mvp_food_planner.Screens.MealDetailsScreen.View.DetailsView;
 
+import java.util.Date;
 import java.util.List;
 
 public class MealDetailsPresenter {
@@ -44,6 +46,24 @@ public class MealDetailsPresenter {
 
     public void deleteMeal(Meal meal) {
         repository.deleteSavedMeal(meal);
+    }
+
+    // Saving a meal to planned meals
+    public void savePlannedMeal(Meal meal, Date date) {
+        PlannedMeal plannedMeal = convertToPlannedMeal(meal, date);
+        repository.insertPlannedMeal(plannedMeal);
+    }
+
+    private PlannedMeal convertToPlannedMeal(Meal meal, Date date) {
+        PlannedMeal plannedMeal = new PlannedMeal();
+        plannedMeal.idMeal = meal.idMeal;
+        plannedMeal.strMeal = meal.strMeal;
+        plannedMeal.strMealThumb = meal.strMealThumb;
+        plannedMeal.strCategory = meal.strCategory;
+        plannedMeal.strArea = meal.strArea;
+        plannedMeal.strInstructions = meal.strInstructions;
+        plannedMeal.date = date; // Assign the date here
+        return plannedMeal;
     }
 
 }

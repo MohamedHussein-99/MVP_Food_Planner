@@ -7,21 +7,26 @@ import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 
+import com.example.mvp_food_planner.DataBase.MealPlannedDao;
 import com.example.mvp_food_planner.DataBase.MealSavedDao;
 import com.example.mvp_food_planner.DataBase.MealsDataBase;
 import com.example.mvp_food_planner.Model.Entity.Meal;
+import com.example.mvp_food_planner.Model.Entity.PlannedMeal;
 
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class MealLocalRepository {
     private MealSavedDao mealSaveDAO;
+    private MealPlannedDao mealPlannedDao;
     private final ExecutorService executorService;
 
     public MealLocalRepository(Context context) {
         MealsDataBase db = MealsDataBase.getInstance(context);
         mealSaveDAO = db.getMealDao();
+        mealPlannedDao = db.getMealPlannedDao();
         executorService = Executors.newSingleThreadExecutor();
     }
 
@@ -51,4 +56,19 @@ public class MealLocalRepository {
     public interface MealExistsCallback {
         void onResult(boolean isExists);
     }
+
+    // --- Planned Meals Methods ---
+
+    public LiveData<List<PlannedMeal>> getPlannedMealsForDay(Date day) {
+        return mealPlannedDao.getMealForDay(day);
+    }
+
+    public void insertPlannedMeal(PlannedMeal meal) {
+        executorService.execute(() -> mealPlannedDao.insertPLannedMeal(meal));
+    }
+
+    public void deletePlannedMeal(PlannedMeal meal) {
+        executorService.execute(() -> mealPlannedDao.deletePlannedMeal(meal));
+    }
+
 }

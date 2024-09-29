@@ -1,6 +1,7 @@
 package com.example.mvp_food_planner.Screens.MealDetailsScreen.View;
 
 import android.annotation.SuppressLint;
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.bumptech.glide.Glide;
 import com.example.mvp_food_planner.Model.Entity.Meal;
 import com.example.mvp_food_planner.Model.Repo.MealLocalRepository;
@@ -26,6 +28,8 @@ import com.example.mvp_food_planner.Screens.MealDetailsScreen.Presenter.MealDeta
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -40,6 +44,7 @@ public class MealDetailsFragment extends Fragment implements DetailsView {
     private MealDetailsAdapter adapter;
     private CheckBox cbHeart;
     private Meal meal;
+    private LottieAnimationView lottieCalender;
 
     //@SuppressLint("WrongViewCast")
     @Override
@@ -54,6 +59,7 @@ public class MealDetailsFragment extends Fragment implements DetailsView {
         thumbnail = view.findViewById(R.id.imgMealDetails);
         recyclerView = view.findViewById(R.id.recyclerIngrediant);
         cbHeart = view.findViewById(R.id.cbHeart);
+        lottieCalender = view.findViewById(R.id.lottieCalender);
 
         presenter = new MealDetailsPresenter(this, new Client() , new MealLocalRepository(getContext()));
 
@@ -88,6 +94,13 @@ public class MealDetailsFragment extends Fragment implements DetailsView {
                 Toast.makeText(getContext(), "Meal is null", Toast.LENGTH_SHORT).show();
             }
         });
+
+        // Add click listener to Lottie calendar
+        lottieCalender.setOnClickListener(v -> {
+            // Use current meal and a date picker to save the planned meal
+            openDatePicker();
+        });
+
         return view;
     }
 
@@ -150,5 +163,26 @@ public class MealDetailsFragment extends Fragment implements DetailsView {
         Snackbar snackbar = Snackbar.make(view, message, Snackbar.LENGTH_LONG);
         snackbar.setAction("Undo", v -> undoAction.run());
         snackbar.show();
+    }
+
+    private void openDatePicker() {
+        // Initialize the calendar instance
+        Calendar calendar = Calendar.getInstance();
+
+        // Create and show a DatePicker dialog, then get the selected date
+        DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(), (view, year, month, dayOfMonth) -> {
+            // Set the selected date in the calendar object
+            calendar.set(year, month, dayOfMonth);
+            Date selectedDate = calendar.getTime();
+
+            // Use 'meal' instead of 'currentMeal' as that's the variable for the current meal
+            if (meal != null) {
+                presenter.savePlannedMeal(meal, selectedDate);
+            } else {
+                Toast.makeText(getContext(), "Meal is not available", Toast.LENGTH_SHORT).show();
+            }
+        }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+
+        datePickerDialog.show();
     }
 }
