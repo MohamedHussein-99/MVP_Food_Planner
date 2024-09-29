@@ -73,10 +73,16 @@ public class MealDetailsFragment extends Fragment implements DetailsView {
             if (meal != null) {
                 if (isChecked) {
                     presenter.saveMeal(meal);
-                    Toast.makeText(getContext(), "Meal saved to favorites", Toast.LENGTH_SHORT).show();
+                    showUndoSnackbar(view, "Meal added to favorites", () -> {
+                        presenter.deleteMeal(meal);
+                        cbHeart.setChecked(false);  // Uncheck the box when undoing
+                    });
                 } else {
                     presenter.deleteMeal(meal);
-                    Toast.makeText(getContext(), "Meal removed from favorites", Toast.LENGTH_SHORT).show();
+                    showUndoSnackbar(view, "Meal removed from favorites", () -> {
+                        presenter.saveMeal(meal);
+                        cbHeart.setChecked(true);  // Check the box when undoing
+                    });
                 }
             } else {
                 Toast.makeText(getContext(), "Meal is null", Toast.LENGTH_SHORT).show();
@@ -138,5 +144,11 @@ public class MealDetailsFragment extends Fragment implements DetailsView {
     @Override
     public void showError(String error) {
         Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show();
+    }
+
+    private void showUndoSnackbar(View view, String message, Runnable undoAction) {
+        Snackbar snackbar = Snackbar.make(view, message, Snackbar.LENGTH_LONG);
+        snackbar.setAction("Undo", v -> undoAction.run());
+        snackbar.show();
     }
 }
