@@ -34,7 +34,7 @@ public class homeActivity extends AppCompatActivity {
             } else if (item.getItemId() == R.id.PlannerMenu) {
                 replaceFragment(new PlannerFragment());
             } else if (item.getItemId() == R.id.FilterMenu){
-                replaceFragment(new FilterFragment());
+                replaceFragment(new FilterFragment()); // Filter
             } else {
                 return false; // If no match, return false
             }

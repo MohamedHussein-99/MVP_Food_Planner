@@ -12,7 +12,7 @@ import java.util.List;
 public class Repo {
     private final Client client;
 
-    public Repo() {         //  need to add some parameters
+    public Repo() {         //  need to add some parameters ( Client client) to the constructor
         client = Client.getInstance();
     }
 
