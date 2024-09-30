@@ -12,8 +12,8 @@ import java.util.List;
 public class Repo {
     private final Client client;
 
-    public Repo() {         //  need to add some parameters ( Client client) to the constructor
-        client = Client.getInstance();
+    public Repo(Client client) {         //  need to add some parameters ( Client client) to the constructor
+        this.client = client;
     }
 
     public void fetchRandomMeals(int count, NetworkCallback<Meal> callback) {
@@ -43,4 +43,5 @@ public class Repo {
     public void fetchCountries(NetworkCallback<CountryFilter> callback) {
         client.getCountriesList(callback);
     }
+
 }

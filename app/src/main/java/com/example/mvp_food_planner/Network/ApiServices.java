@@ -28,4 +28,18 @@ public interface ApiServices {
     // meal by id
     @GET("lookup.php")
     Call<GenericeResponse<Meal>> getMealById(@Query("i") String mealId);
+
+    // meal by category
+    @GET("filter.php")
+    Call<GenericeResponse<Meal>> getMealsByCategory(@Query("c") String category);
+
+    // meal by area
+    @GET("filter.php")
+    Call<GenericeResponse<Meal>> getMealsByArea(@Query("a") String area);
+
+    // meal by ingredient
+    @GET("filter.php")
+    Call<GenericeResponse<Meal>> getMealsByIngredient(@Query("i") String ingredient);
+
+
 }

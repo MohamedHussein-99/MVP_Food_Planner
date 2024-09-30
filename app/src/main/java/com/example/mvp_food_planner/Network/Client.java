@@ -39,7 +39,7 @@ public class Client {
     }
 
     // Generic method to fetch data from the API
-    // Boolean isCategory is used to differentiate between categories and meals to avoid error
+    // Boolean to avoid fetching category error
     private <T> void fetchData(Call<GenericeResponse<T>> call, NetworkCallback<T> callback, boolean isCategory) {
         call.enqueue(new Callback<GenericeResponse<T>>() {
             @Override
@@ -63,6 +63,21 @@ public class Client {
                 callback.onFailure(throwable.getMessage());
             }
         });
+    }
+
+    // Fetch meals by category
+    public void getMealsByCategory(String category, NetworkCallback<Meal> callback) {
+        fetchData(service.getMealsByCategory(category), callback, false);
+    }
+
+    // Fetch meals by area (country)
+    public void getMealsByArea(String area, NetworkCallback<Meal> callback) {
+        fetchData(service.getMealsByArea(area), callback, false);
+    }
+
+    // Fetch meals by ingredient
+    public void getMealsByIngredient(String ingredient, NetworkCallback<Meal> callback) {
+        fetchData(service.getMealsByIngredient(ingredient), callback, false);
     }
 
     public void getCategoriesList(NetworkCallback<CategoryFilter> callback) {

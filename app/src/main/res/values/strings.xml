@@ -17,4 +17,5 @@
     <string name="onthisday">On This Day</string>
     <string name="plannedmeals">Your Plan</string>
     <string name="date">Date</string>
+    <string name="catFilter">Filter By Category</string>
 </resources>

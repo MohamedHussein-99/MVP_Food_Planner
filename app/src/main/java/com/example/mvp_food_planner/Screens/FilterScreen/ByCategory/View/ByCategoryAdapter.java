@@ -1,4 +1,4 @@
-package com.example.mvp_food_planner.Screens.HomeScreen.View;
+package com.example.mvp_food_planner.Screens.FilterScreen.ByCategory.View;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -13,15 +13,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.mvp_food_planner.Model.POJO.CategoryFilter;
 import com.example.mvp_food_planner.R;
+import com.example.mvp_food_planner.Screens.HomeScreen.View.CategoryAdapter;
 
 import java.util.List;
 
-public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder> {
+
+public class ByCategoryAdapter extends RecyclerView.Adapter<ByCategoryAdapter.CategoryViewHolder> {
 
     private final Context context;
     private final List<CategoryFilter> categories;
 
-    public CategoryAdapter(Context context, List<CategoryFilter> categories) {
+    public ByCategoryAdapter(Context context, List<CategoryFilter> categories) {
         this.context = context;
         this.categories = categories;
     }
@@ -37,7 +39,9 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
     public void onBindViewHolder(@NonNull CategoryViewHolder holder, int position) {
         CategoryFilter category = categories.get(position);
         holder.txtCategory.setText(category.getStrCategory());
-        Glide.with(holder.itemView.getContext()).load(category.getStrCategoryThumb()).into(holder.imgMeal);
+        Glide.with(holder.itemView.getContext())
+                .load(category.getStrCategoryThumb())
+                .into(holder.imgMeal);
     }
 
     @Override
@@ -46,8 +50,8 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
     }
 
     public static class CategoryViewHolder extends RecyclerView.ViewHolder {
-        public TextView txtCategory;
-        public ImageView imgMeal;
+        TextView txtCategory;
+        ImageView imgMeal;
 
         public CategoryViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -56,3 +60,4 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         }
     }
 }
+
