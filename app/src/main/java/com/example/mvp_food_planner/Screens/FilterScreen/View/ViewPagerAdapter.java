@@ -7,6 +7,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.example.mvp_food_planner.Screens.FilterScreen.ByCategory.View.ByCategoryFragment;
 import com.example.mvp_food_planner.Screens.FilterScreen.ByCountry.View.ByCountryFragment;
+import com.example.mvp_food_planner.Screens.FilterScreen.ByIngredients.View.ByIngredientFragment;
 
 public class ViewPagerAdapter extends FragmentStateAdapter {
     public ViewPagerAdapter(@NonNull FragmentActivity fragmentActivity) {

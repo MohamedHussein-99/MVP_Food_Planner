@@ -18,4 +18,5 @@
     <string name="plannedmeals">Your Plan</string>
     <string name="date">Date</string>
     <string name="catFilter">Filter By Category</string>
+    <string name="bying">By Ingredients</string>
 </resources>

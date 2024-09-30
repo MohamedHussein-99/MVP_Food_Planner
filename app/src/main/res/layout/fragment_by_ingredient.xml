@@ -4,15 +4,36 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Screens.FilterScreen.View.ByIngredientFragment">
+    tools:context=".Screens.FilterScreen.ByIngredients.View.ByIngredientFragment">
 
     <TextView
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="189dp"
-        android:layout_marginTop="299dp"
-        android:text="@string/allingrediant"
+        android:layout_marginStart="92dp"
+        android:layout_marginTop="36dp"
+        android:text="@string/bying"
+        android:textSize="24sp"
+        android:textStyle="bold|italic"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/lottieingredient"
+        android:layout_width="182dp"
+        android:layout_height="96dp"
+        android:layout_marginTop="-16dp"
+        app:layout_constraintStart_toEndOf="@+id/textView4"
+        app:layout_constraintTop_toTopOf="parent"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/ingredient" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerIngredient"
+        android:layout_width="match_parent"
+        android:layout_height="641dp"
+        android:layout_marginTop="12dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lottieingredient" />
 </androidx.constraintlayout.widget.ConstraintLayout>

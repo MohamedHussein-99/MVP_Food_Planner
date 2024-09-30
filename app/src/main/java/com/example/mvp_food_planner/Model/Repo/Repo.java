@@ -3,6 +3,7 @@ package com.example.mvp_food_planner.Model.Repo;
 import com.example.mvp_food_planner.Model.Entity.Meal;
 import com.example.mvp_food_planner.Model.POJO.CategoryFilter;
 import com.example.mvp_food_planner.Model.POJO.CountryFilter;
+import com.example.mvp_food_planner.Model.POJO.IngredientFilter;
 import com.example.mvp_food_planner.Network.Client;
 import com.example.mvp_food_planner.Network.NetworkCallback;
 
@@ -42,6 +43,9 @@ public class Repo {
 
     public void fetchCountries(NetworkCallback<CountryFilter> callback) {
         client.getCountriesList(callback);
+    }
+    public void fetchIngredients(NetworkCallback<IngredientFilter> callback) {
+        client.getIngredientsList(callback);  // Assuming the Client class has a method to fetch ingredients
     }
 
 }
