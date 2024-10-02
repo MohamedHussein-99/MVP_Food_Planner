@@ -19,4 +19,5 @@
     <string name="date">Date</string>
     <string name="catFilter">Filter By Category</string>
     <string name="bying">By Ingredients</string>
+    <string name="world">World Wide</string>
 </resources>

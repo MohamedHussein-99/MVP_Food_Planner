@@ -13,7 +13,7 @@ import java.util.List;
 public class Repo {
     private final Client client;
 
-    public Repo(Client client) {         //  need to add some parameters ( Client client) to the constructor
+    public Repo(Client client) { // need to add some parameters (Client client) to the constructor
         this.client = client;
     }
 
@@ -44,6 +44,7 @@ public class Repo {
     public void fetchCountries(NetworkCallback<CountryFilter> callback) {
         client.getCountriesList(callback);
     }
+
     public void fetchIngredients(NetworkCallback<IngredientFilter> callback) {
         client.getIngredientsList(callback);
     }
@@ -59,5 +60,5 @@ public class Repo {
     public void fetchMealsByIngredient(String ingredient, NetworkCallback<Meal> callback) {
         client.getMealsByIngredient(ingredient, callback);
     }
-
 }
+
