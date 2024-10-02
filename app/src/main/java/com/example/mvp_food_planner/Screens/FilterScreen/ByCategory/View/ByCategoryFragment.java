@@ -21,6 +21,7 @@ import com.example.mvp_food_planner.Model.Repo.Repo;
 import com.example.mvp_food_planner.Network.Client;
 import com.example.mvp_food_planner.R;
 import com.example.mvp_food_planner.Screens.FilterScreen.ByCategory.Presenter.ByCategoryPresenter;
+import com.example.mvp_food_planner.Screens.FilterScreen.FilteredItems.View.FilteredItemFragment;
 import com.example.mvp_food_planner.Screens.FilterScreen.View.Searchable;
 
 import java.util.ArrayList;
@@ -42,7 +43,19 @@ public class ByCategoryFragment extends Fragment implements CategoryView {
         recyclerCategory = view.findViewById(R.id.recyclerCategoryfilter);
         recyclerCategory.setLayoutManager(new GridLayoutManager(getContext(), 2)); // Grid with 2 columns
 
-        adapter = new ByCategoryAdapter(getContext(), categories);
+        // Set the click listener for categories
+        adapter = new ByCategoryAdapter(getContext(), categories, category -> {
+            // Navigate to FilteredItemFragment and pass the selected category
+            Bundle bundle = new Bundle();
+            bundle.putString("selectedCategory", category);
+            FilteredItemFragment filteredItemFragment = new FilteredItemFragment();
+            filteredItemFragment.setArguments(bundle);
+
+            getParentFragmentManager().beginTransaction()
+                    .replace(R.id.fragmentNav, filteredItemFragment)
+                    .addToBackStack(null)
+                    .commit();
+        });
         recyclerCategory.setAdapter(adapter);
 
         // Initialize presenter
@@ -66,5 +79,6 @@ public class ByCategoryFragment extends Fragment implements CategoryView {
         Toast.makeText(getContext(), "Error: " + errorMessage, Toast.LENGTH_SHORT).show();
     }
 }
+
 
 

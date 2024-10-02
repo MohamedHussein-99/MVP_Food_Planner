@@ -29,15 +29,15 @@ public interface ApiServices {
     @GET("lookup.php")
     Call<GenericeResponse<Meal>> getMealById(@Query("i") String mealId);
 
-    // list all meals of this Category // www.themealdb.com/api/json/v1/1/filter.php?c=Seafood
+    // filter meals of this Category // www.themealdb.com/api/json/v1/1/filter.php?c=Seafood
     @GET("filter.php")
     Call<GenericeResponse<Meal>> getMealsByCategory(@Query("c") String category);
 
-    // meal by area
+    // filter meal by this area
     @GET("filter.php")
     Call<GenericeResponse<Meal>> getMealsByArea(@Query("a") String area);
 
-    // meal by ingredient
+    // filter meal by this ingredient
     @GET("filter.php")
     Call<GenericeResponse<Meal>> getMealsByIngredient(@Query("i") String ingredient);
 

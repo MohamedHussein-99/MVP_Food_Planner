@@ -65,17 +65,17 @@ public class Client {
         });
     }
 
-    // Fetch meals by category
+    // Fetch meals by this category
     public void getMealsByCategory(String category, NetworkCallback<Meal> callback) {
         fetchData(service.getMealsByCategory(category), callback, false);
     }
 
-    // Fetch meals by area (country)
+    // Fetch meals by this area (country)
     public void getMealsByArea(String area, NetworkCallback<Meal> callback) {
         fetchData(service.getMealsByArea(area), callback, false);
     }
 
-    // Fetch meals by ingredient
+    // get meals by this ingredient
     public void getMealsByIngredient(String ingredient, NetworkCallback<Meal> callback) {
         fetchData(service.getMealsByIngredient(ingredient), callback, false);
     }
@@ -84,6 +84,7 @@ public class Client {
         fetchData(service.getCategories(), callback, true);
     }
 
+    // get all ingredients
     public void getIngredientsList(NetworkCallback<IngredientFilter> callback) {
         fetchData(service.getIngredients(), callback, false);
     }

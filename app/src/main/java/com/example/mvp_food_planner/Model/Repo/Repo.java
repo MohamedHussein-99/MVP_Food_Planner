@@ -45,7 +45,19 @@ public class Repo {
         client.getCountriesList(callback);
     }
     public void fetchIngredients(NetworkCallback<IngredientFilter> callback) {
-        client.getIngredientsList(callback);  // Assuming the Client class has a method to fetch ingredients
+        client.getIngredientsList(callback);
+    }
+
+    public void fetchMealsByCategory(String category, NetworkCallback<Meal> callback) {
+        client.getMealsByCategory(category, callback);
+    }
+
+    public void fetchMealsByArea(String area, NetworkCallback<Meal> callback) {
+        client.getMealsByArea(area, callback);
+    }
+
+    public void fetchMealsByIngredient(String ingredient, NetworkCallback<Meal> callback) {
+        client.getMealsByIngredient(ingredient, callback);
     }
 
 }

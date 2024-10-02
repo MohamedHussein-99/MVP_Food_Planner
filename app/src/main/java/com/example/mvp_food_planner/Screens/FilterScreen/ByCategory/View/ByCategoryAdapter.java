@@ -22,26 +22,31 @@ public class ByCategoryAdapter extends RecyclerView.Adapter<ByCategoryAdapter.Ca
 
     private final Context context;
     private final List<CategoryFilter> categories;
+    private final CategoryClickListener listener; // Add listener
 
-    public ByCategoryAdapter(Context context, List<CategoryFilter> categories) {
+    public ByCategoryAdapter(Context context, List<CategoryFilter> categories, CategoryClickListener listener) {
         this.context = context;
         this.categories = categories;
+        this.listener = listener; // Initialize listener
     }
 
     @NonNull
     @Override
     public CategoryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.recycler_category, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.card_filter, parent, false);
         return new CategoryViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull CategoryViewHolder holder, int position) {
         CategoryFilter category = categories.get(position);
-        holder.txtCategory.setText(category.getStrCategory());
+        holder.title.setText(category.getStrCategory());
         Glide.with(holder.itemView.getContext())
                 .load(category.getStrCategoryThumb())
-                .into(holder.imgMeal);
+                .into(holder.thumbnail);
+
+        // Handle item click
+        holder.itemView.setOnClickListener(v -> listener.onCategoryClick(category.getStrCategory()));
     }
 
     @Override
@@ -50,14 +55,20 @@ public class ByCategoryAdapter extends RecyclerView.Adapter<ByCategoryAdapter.Ca
     }
 
     public static class CategoryViewHolder extends RecyclerView.ViewHolder {
-        TextView txtCategory;
-        ImageView imgMeal;
+        public TextView title;
+        public ImageView thumbnail;
 
         public CategoryViewHolder(@NonNull View itemView) {
             super(itemView);
-            txtCategory = itemView.findViewById(R.id.txtCategory);
-            imgMeal = itemView.findViewById(R.id.imgMeal);
+            title = itemView.findViewById(R.id.title);
+            thumbnail = itemView.findViewById(R.id.thumbnail);
         }
     }
+
+    // Listener for category click
+    public interface CategoryClickListener {
+        void onCategoryClick(String category);
+    }
 }
+
 
