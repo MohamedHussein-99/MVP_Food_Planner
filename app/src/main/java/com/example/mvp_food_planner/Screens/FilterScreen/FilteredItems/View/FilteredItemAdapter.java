@@ -21,10 +21,12 @@ public class FilteredItemAdapter extends RecyclerView.Adapter<ByCategoryAdapter.
 
     private final Context context;
     private final List<Meal> meals;
+    private final MealClickListener listener;
 
-    public FilteredItemAdapter(Context context, List<Meal> meal) {
+    public FilteredItemAdapter(Context context, List<Meal> meal, MealClickListener listener) {
         this.context = context;
         this.meals = meal;
+        this.listener = listener;
     }
 
     @NonNull
@@ -41,6 +43,7 @@ public class FilteredItemAdapter extends RecyclerView.Adapter<ByCategoryAdapter.
         Glide.with(holder.itemView.getContext())
                 .load(meal.strMealThumb)
                 .into(holder.thumbnail);
+        holder.itemView.setOnClickListener(v -> listener.onMealClicked(meal));
     }
 
     @Override

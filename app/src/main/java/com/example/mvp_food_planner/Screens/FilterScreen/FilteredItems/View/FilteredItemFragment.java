@@ -45,7 +45,7 @@ public class FilteredItemFragment extends Fragment implements FilteredItemView, 
         txtItem = view.findViewById(R.id.txtItem);
         recyclerItem = view.findViewById(R.id.recyclerItem);
         recyclerItem.setLayoutManager(new GridLayoutManager(getContext(), 2));
-        adapter = new FilteredItemAdapter(getContext(), meals);
+        adapter = new FilteredItemAdapter(getContext(), meals,this::onMealClicked);
         recyclerItem.setAdapter(adapter);
 
         presenter = new FilteredItemPresenter(this , new Repo(Client.getInstance()));
