@@ -4,6 +4,7 @@ import static android.content.ContentValues.TAG;
 
 import android.os.Bundle;
 
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -33,8 +34,8 @@ public class FilteredItemFragment extends Fragment implements FilteredItemView, 
     private FilteredItemAdapter adapter;
     private FilteredItemPresenter presenter;
     private List<Meal> meals = new ArrayList<>();
-
-
+    private List<Meal> filteredMeals = new ArrayList<>(); // List for filtered meals
+    private SearchView searchView; // Add SearchView reference
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -45,11 +46,28 @@ public class FilteredItemFragment extends Fragment implements FilteredItemView, 
         txtItem = view.findViewById(R.id.txtItem);
         recyclerItem = view.findViewById(R.id.recyclerItem);
         recyclerItem.setLayoutManager(new GridLayoutManager(getContext(), 2));
-        adapter = new FilteredItemAdapter(getContext(), meals,this::onMealClicked);
+
+        // Initialize SearchView
+        searchView = view.findViewById(R.id.searchBar); // Make sure it matches the ID in XML
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                filterMeals(newText); // Filter meals as user types
+                return true;
+            }
+        });
+
+        adapter = new FilteredItemAdapter(getContext(), filteredMeals, this::onMealClicked);
         recyclerItem.setAdapter(adapter);
 
-        presenter = new FilteredItemPresenter(this , new Repo(Client.getInstance()));
+        presenter = new FilteredItemPresenter(this, new Repo(Client.getInstance()));
 
+        // Retrieve selected filters (Category, Area, Ingredient)
         Bundle bundle = getArguments();
         if (bundle != null) {
             String selectedCategory = bundle.getString("selectedCategory");
@@ -57,7 +75,7 @@ public class FilteredItemFragment extends Fragment implements FilteredItemView, 
             String selectedIngredient = bundle.getString("selectedIngredient");
 
             if (selectedCategory != null) {
-                txtItem.setText("Your Favorite " + selectedCategory+ " Dishes" );
+                txtItem.setText("Your Favorite " + selectedCategory + " Dishes");
                 presenter.fetchMealsByCategory(selectedCategory);
             } else if (selectedArea != null) {
                 txtItem.setText("Lovely " + selectedArea + " Cuisine");
@@ -65,9 +83,9 @@ public class FilteredItemFragment extends Fragment implements FilteredItemView, 
             } else if (selectedIngredient != null) {
                 txtItem.setText("Made With " + selectedIngredient);
                 presenter.fetchMealsByIngredient(selectedIngredient);
-
             }
         }
+
         return view;
     }
 
@@ -76,6 +94,8 @@ public class FilteredItemFragment extends Fragment implements FilteredItemView, 
         recyclerItem.setVisibility(View.VISIBLE);
         meals.clear();
         meals.addAll(randomList);
+        filteredMeals.clear();
+        filteredMeals.addAll(randomList); // Initially, show all meals
         adapter.notifyDataSetChanged();
     }
 
@@ -108,5 +128,20 @@ public class FilteredItemFragment extends Fragment implements FilteredItemView, 
                 presenter.fetchMealsByArea(selectedArea);
             }
         }
+    }
+
+    // Method to filter meals based on the search query
+    private void filterMeals(String query) {
+        filteredMeals.clear();
+        if (query.isEmpty()) {
+            filteredMeals.addAll(meals); // If query is empty, show all meals
+        } else {
+            for (Meal meal : meals) {
+                if (meal.getStrMeal().toLowerCase().contains(query.toLowerCase())) {
+                    filteredMeals.add(meal);
+                }
+            }
+        }
+        adapter.notifyDataSetChanged(); // Refresh the adapter to show the filtered meals
     }
 }

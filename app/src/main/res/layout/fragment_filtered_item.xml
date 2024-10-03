@@ -10,20 +10,30 @@
         android:id="@+id/txtItem"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="6dp"
         android:fontFamily="@font/alkatra_semibold"
         android:text="@string/title"
         android:textSize="24sp"
         android:textStyle="bold|italic"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/searchBar" />
+
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/searchBar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:queryHint="Search for a meal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:queryHint="Your Favourite Meal" />
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerItem"
         android:layout_width="match_parent"
         android:layout_height="656dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtItem" />
 </androidx.constraintlayout.widget.ConstraintLayout>
