@@ -20,12 +20,12 @@
                 android:id="@+id/txtRecipeTitle"
                 android:layout_width="181dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="112dp"
+                android:layout_marginStart="32dp"
                 android:layout_marginTop="28dp"
                 android:text="@string/title"
                 android:textSize="34sp"
                 android:textStyle="bold|italic"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/imgMealDetails"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
@@ -53,9 +53,8 @@
                 android:id="@+id/lottieCalender"
                 android:layout_width="77dp"
                 android:layout_height="58dp"
-                android:layout_marginStart="60dp"
                 android:layout_marginTop="8dp"
-                app:layout_constraintStart_toEndOf="@+id/txtCat"
+                app:layout_constraintStart_toStartOf="@+id/cbHeart"
                 app:layout_constraintTop_toBottomOf="@+id/imgMealDetails"
                 app:lottie_autoPlay="true"
                 app:lottie_loop="true"
@@ -115,9 +114,8 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerIngrediant"
-                android:layout_width="345dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="33dp"
                 android:layout_marginTop="23dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txtIngrediant" />
@@ -126,6 +124,7 @@
                 android:id="@+id/txtInstructions"
                 android:layout_width="340dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="98dp"
                 android:text="@string/ins"
                 app:layout_constraintStart_toStartOf="@+id/recyclerIngrediant"
