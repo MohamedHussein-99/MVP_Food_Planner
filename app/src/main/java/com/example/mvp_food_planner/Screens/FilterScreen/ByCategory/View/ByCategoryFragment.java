@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -34,6 +35,8 @@ public class ByCategoryFragment extends Fragment implements CategoryView {
     private ByCategoryPresenter presenter;
     private ByCategoryAdapter adapter;
     private List<CategoryFilter> categories = new ArrayList<>();
+    private List<CategoryFilter> filteredCategories = new ArrayList<>(); // For filtering
+    private SearchView searchView; // Add SearchView reference
 
     @Nullable
     @Override
@@ -43,8 +46,23 @@ public class ByCategoryFragment extends Fragment implements CategoryView {
         recyclerCategory = view.findViewById(R.id.recyclerCategoryfilter);
         recyclerCategory.setLayoutManager(new GridLayoutManager(getContext(), 2)); // Grid with 2 columns
 
+        // Initialize SearchView
+        searchView = view.findViewById(R.id.searchBar); // Make sure this matches the search bar ID
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                filterCategories(newText); // Filter categories as user types
+                return true;
+            }
+        });
+
         // Set the click listener for categories
-        adapter = new ByCategoryAdapter(getContext(), categories, category -> {
+        adapter = new ByCategoryAdapter(getContext(), filteredCategories, category -> {
             // Navigate to FilteredItemFragment and pass the selected category
             Bundle bundle = new Bundle();
             bundle.putString("selectedCategory", category);
@@ -71,6 +89,8 @@ public class ByCategoryFragment extends Fragment implements CategoryView {
     public void displayCategories(List<CategoryFilter> categoryList) {
         categories.clear();
         categories.addAll(categoryList);
+        filteredCategories.clear();
+        filteredCategories.addAll(categoryList); // Initially show all categories
         adapter.notifyDataSetChanged();
     }
 
@@ -78,7 +98,24 @@ public class ByCategoryFragment extends Fragment implements CategoryView {
     public void showError(String errorMessage) {
         Toast.makeText(getContext(), "Error: " + errorMessage, Toast.LENGTH_SHORT).show();
     }
+
+    // Method to filter categories based on search query
+    private void filterCategories(String query) {
+        filteredCategories.clear();
+        if (query.isEmpty()) {
+            filteredCategories.addAll(categories); // If no search query, show all categories
+        } else {
+            for (CategoryFilter category : categories) {
+                if (category.getStrCategory().toLowerCase().contains(query.toLowerCase())) {
+                    filteredCategories.add(category);
+                }
+            }
+        }
+        adapter.notifyDataSetChanged(); // Refresh the adapter
+    }
 }
+
+
 
 
 
