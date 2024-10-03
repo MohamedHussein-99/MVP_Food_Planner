@@ -116,19 +116,6 @@ public class FilteredItemFragment extends Fragment implements FilteredItemView, 
                 .commit();
     }
 
-    public void reloadData() {
-        Bundle bundle = getArguments();
-        if (bundle != null) {
-            String selectedCategory = bundle.getString("selectedCategory");
-            String selectedArea = bundle.getString("selectedArea");
-
-            if (selectedCategory != null) {
-                presenter.fetchMealsByCategory(selectedCategory);
-            } else if (selectedArea != null) {
-                presenter.fetchMealsByArea(selectedArea);
-            }
-        }
-    }
 
     // Method to filter meals based on the search query
     private void filterMeals(String query) {

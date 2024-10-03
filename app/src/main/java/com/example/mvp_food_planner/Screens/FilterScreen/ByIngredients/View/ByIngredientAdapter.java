@@ -19,10 +19,17 @@ public class ByIngredientAdapter extends RecyclerView.Adapter<ByIngredientAdapte
 
     private final Context context;
     private final List<IngredientFilter> ingredients;
+    private final IngredientClickListener listener; // Add this line
 
-    public ByIngredientAdapter(Context context, List<IngredientFilter> ingredients) {
+    // Create a listener interface
+    public interface IngredientClickListener {
+        void onIngredientClicked(IngredientFilter ingredient);
+    }
+
+    public ByIngredientAdapter(Context context, List<IngredientFilter> ingredients, IngredientClickListener listener) {
         this.context = context;
         this.ingredients = ingredients;
+        this.listener = listener; // Initialize the listener
     }
 
     @NonNull
@@ -44,6 +51,9 @@ public class ByIngredientAdapter extends RecyclerView.Adapter<ByIngredientAdapte
         Glide.with(holder.itemView.getContext())
                 .load(imageUrl)
                 .into(holder.imgMeal);
+
+        // Set an OnClickListener to the item view
+        holder.itemView.setOnClickListener(v -> listener.onIngredientClicked(ingredient)); // Pass the clicked ingredient
     }
 
     @Override
@@ -62,4 +72,5 @@ public class ByIngredientAdapter extends RecyclerView.Adapter<ByIngredientAdapte
         }
     }
 }
+
 

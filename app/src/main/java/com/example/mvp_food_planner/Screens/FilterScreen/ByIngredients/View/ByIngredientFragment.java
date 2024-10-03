@@ -18,6 +18,7 @@ import com.example.mvp_food_planner.Model.Repo.Repo;
 import com.example.mvp_food_planner.Network.Client;
 import com.example.mvp_food_planner.R;
 import com.example.mvp_food_planner.Screens.FilterScreen.ByIngredients.Presenter.ByIngredientPresenter;
+import com.example.mvp_food_planner.Screens.FilterScreen.FilteredItems.View.FilteredItemFragment;
 import com.example.mvp_food_planner.Screens.FilterScreen.View.Searchable;
 
 import java.util.ArrayList;
@@ -29,8 +30,8 @@ public class ByIngredientFragment extends Fragment implements IngredientView {
     private ByIngredientPresenter presenter;
     private ByIngredientAdapter ingredientAdapter;
     private List<IngredientFilter> ingredients = new ArrayList<>();
-    private List<IngredientFilter> filteredIngredients = new ArrayList<>(); // For filtering
-    private SearchView searchView; // Add SearchView reference
+    private List<IngredientFilter> filteredIngredients = new ArrayList<>();
+    private SearchView searchView;
 
     public ByIngredientFragment() { }
 
@@ -41,11 +42,11 @@ public class ByIngredientFragment extends Fragment implements IngredientView {
         // Setup RecyclerView with GridLayoutManager
         RecyclerView recyclerView = view.findViewById(R.id.recyclerIngredient);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));  // 3 columns in grid
-        ingredientAdapter = new ByIngredientAdapter(getContext(), filteredIngredients);
+        ingredientAdapter = new ByIngredientAdapter(getContext(), filteredIngredients, this::onIngredientClicked); // Pass the click listener
         recyclerView.setAdapter(ingredientAdapter);
 
         // Initialize SearchView
-        searchView = view.findViewById(R.id.searchBar); // Make sure this matches the search bar ID
+        searchView = view.findViewById(R.id.searchBar); // Ensure this matches the search bar ID
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -95,4 +96,35 @@ public class ByIngredientFragment extends Fragment implements IngredientView {
         }
         ingredientAdapter.notifyDataSetChanged(); // Refresh the adapter
     }
+
+    // Method to handle ingredient click
+    private void onIngredientClicked(IngredientFilter ingredient) {
+        FilteredItemFragment filteredItemFragment = new FilteredItemFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("selectedIngredient", ingredient.getStrIngredient());
+
+        // Retrieve any existing selections to append
+        // You can retrieve these from your currently selected filters in the previous fragment
+        // For example, assuming these are passed as arguments to this fragment:
+        if (getArguments() != null) {
+            String selectedCategory = getArguments().getString("selectedCategory");
+            String selectedArea = getArguments().getString("selectedArea");
+
+            if (selectedCategory != null) {
+                bundle.putString("selectedCategory", selectedCategory);
+            }
+            if (selectedArea != null) {
+                bundle.putString("selectedArea", selectedArea);
+            }
+        }
+
+        filteredItemFragment.setArguments(bundle);
+
+        getParentFragmentManager().beginTransaction()
+                .replace(R.id.fragmentNav, filteredItemFragment)
+                .addToBackStack(null)
+                .commit();
+    }
 }
+
+
