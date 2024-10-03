@@ -10,31 +10,54 @@
         android:id="@+id/recyclerViewCountry"
         android:layout_width="match_parent"
         android:layout_height="639dp"
+        android:layout_marginTop="-8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/lottieEarth" />
 
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/searchBar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:queryHint="Search for a meal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:queryHint="Your Favorite Country"
+        />
+
     <TextView
         android:id="@+id/textView7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="28dp"
+        android:layout_width="179dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="4dp"
         android:fontFamily="@font/fira_code_light"
         android:text="@string/world"
-        android:textSize="24sp"
+        android:textSize="28sp"
         android:textStyle="bold|italic"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/searchBar" />
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/lottieEarth"
         android:layout_width="119dp"
         android:layout_height="81dp"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="11dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="-8dp"
         app:layout_constraintStart_toEndOf="@+id/textView7"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/searchBar"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
         app:lottie_rawRes="@raw/earth" />
+
+    <ImageView
+        android:id="@+id/noResultsImage"
+        android:layout_width="121dp"
+        android:layout_height="124dp"
+        android:layout_gravity="center"
+        android:layout_marginStart="144dp"
+        android:layout_marginTop="300dp"
+        android:src="@drawable/baseline_filter_alt_off_24"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

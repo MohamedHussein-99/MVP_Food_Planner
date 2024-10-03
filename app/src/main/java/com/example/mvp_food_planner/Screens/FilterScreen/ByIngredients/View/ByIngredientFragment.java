@@ -17,12 +17,13 @@ import com.example.mvp_food_planner.Model.Repo.Repo;
 import com.example.mvp_food_planner.Network.Client;
 import com.example.mvp_food_planner.R;
 import com.example.mvp_food_planner.Screens.FilterScreen.ByIngredients.Presenter.ByIngredientPresenter;
+import com.example.mvp_food_planner.Screens.FilterScreen.View.Searchable;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class ByIngredientFragment extends Fragment implements IngredientView {
+public class ByIngredientFragment extends Fragment implements IngredientView , Searchable {
 
     private ByIngredientPresenter presenter;
     private ByIngredientAdapter ingredientAdapter;
@@ -64,6 +65,11 @@ public class ByIngredientFragment extends Fragment implements IngredientView {
     @Override
     public void showError(String errorMessage) {
         Toast.makeText(getContext(), errorMessage, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onSearchQuery(String query) {
+
     }
 }
 
