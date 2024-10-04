@@ -12,8 +12,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.bumptech.glide.Glide;
+import com.example.mvp_food_planner.Model.Entity.Meal;
 import com.example.mvp_food_planner.Model.Entity.PlannedMeal;
 import com.example.mvp_food_planner.R;
+import com.example.mvp_food_planner.Screens.HomeScreen.View.RandomMealAdapter;
 
 import java.util.List;
 
@@ -21,11 +23,13 @@ public class PlannerAdapter extends RecyclerView.Adapter<PlannerAdapter.PlanView
     private List<PlannedMeal> plannedMeals;
     private Context context;
     private PlannerListener listener;
+    private RandomMealAdapter.MealClickListener mealClickListener;
 
-    public PlannerAdapter(List<PlannedMeal> plannedMeals, Context context, PlannerListener listener) {
+    public PlannerAdapter(List<PlannedMeal> plannedMeals, Context context, PlannerListener listener, RandomMealAdapter.MealClickListener mealClickListener) {
         this.plannedMeals = plannedMeals;
         this.context = context;
         this.listener = listener;
+        this.mealClickListener = mealClickListener;
     }
 
     @NonNull
@@ -49,6 +53,13 @@ public class PlannerAdapter extends RecyclerView.Adapter<PlannerAdapter.PlanView
         // Remove meal on trash click
         holder.lottieTrash.setOnClickListener(v -> {
             listener.onDeleteMeal(meal);
+        });
+        // Add meal click listener
+        holder.itemView.setOnClickListener(v -> {
+            Meal mealData = new Meal(); // Convert  PlannedMeal to Meal
+            mealData.idMeal = meal.idMeal;
+            mealData.strMeal = meal.strMeal;
+            mealClickListener.onMealClicked(mealData);
         });
     }
 
@@ -81,6 +92,9 @@ public class PlannerAdapter extends RecyclerView.Adapter<PlannerAdapter.PlanView
 
     public interface PlannerListener {
         void onDeleteMeal(PlannedMeal meal);
+    }
+    public interface MealClickListener {
+        void onMealClicked(Meal meal);
     }
 }
 

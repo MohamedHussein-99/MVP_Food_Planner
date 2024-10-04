@@ -12,9 +12,11 @@ import android.view.ViewGroup;
 import android.widget.CalendarView;
 import android.widget.Toast;
 
+import com.example.mvp_food_planner.Model.Entity.Meal;
 import com.example.mvp_food_planner.Model.Entity.PlannedMeal;
 import com.example.mvp_food_planner.Model.Repo.MealLocalRepository;
 import com.example.mvp_food_planner.R;
+import com.example.mvp_food_planner.Screens.MealDetailsScreen.View.MealDetailsFragment;
 import com.example.mvp_food_planner.Screens.PlannerScreen.Presenter.PlannerPresenter;
 
 import java.util.ArrayList;
@@ -23,7 +25,7 @@ import java.util.Date;
 import java.util.List;
 
 
-public class PlannerFragment extends Fragment implements PlannerView, PlannerAdapter.PlannerListener {
+public class PlannerFragment extends Fragment implements PlannerView, PlannerAdapter.PlannerListener, PlannerAdapter.MealClickListener {
 
     private PlannerPresenter presenter;
     private PlannerAdapter adapter;
@@ -39,7 +41,7 @@ public class PlannerFragment extends Fragment implements PlannerView, PlannerAda
         plannedCalender = view.findViewById(R.id.plannedCalender);
 
         plannedRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapter = new PlannerAdapter(new ArrayList<>(), getContext(), this);
+        adapter = new PlannerAdapter(new ArrayList<>(), getContext(), this, this::onMealClicked);
         plannedRecycler.setAdapter(adapter);
 
         presenter = new PlannerPresenter(this, new MealLocalRepository(getContext()));
@@ -83,6 +85,22 @@ public class PlannerFragment extends Fragment implements PlannerView, PlannerAda
     @Override
     public void showError(String error) {
         //Toast.makeText(requireContext(), "Error message", Toast.LENGTH_SHORT).show();
+    }
+    @Override
+    public void onMealClicked(Meal meal) {
+        if (meal != null && meal.idMeal != null) {
+            Bundle bundle = new Bundle();
+            bundle.putString("mealId", meal.idMeal);
 
+            MealDetailsFragment detailsFragment = new MealDetailsFragment();
+            detailsFragment.setArguments(bundle);
+
+            getParentFragmentManager().beginTransaction()
+                    .replace(R.id.fragmentNav, detailsFragment)
+                    .addToBackStack(null)
+                    .commit();
+        } else {
+            Toast.makeText(getContext(), "Meal ID is missing", Toast.LENGTH_SHORT).show();
+        }
     }
 }
