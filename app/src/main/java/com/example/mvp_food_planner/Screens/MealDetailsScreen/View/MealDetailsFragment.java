@@ -183,28 +183,21 @@ public class MealDetailsFragment extends Fragment implements DetailsView {
     }
 
     private void openDatePicker() {
-        // Initialize the calendar instance for the current date
         Calendar calendar = Calendar.getInstance();
 
-        // Create and show a DatePicker dialog
         DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(), (view, year, month, dayOfMonth) -> {
-            // Set the selected date in the calendar object
             calendar.set(year, month, dayOfMonth);
             Date selectedDate = calendar.getTime();
 
-            // Get today's date to compare
             Calendar today = Calendar.getInstance();
             today.set(Calendar.HOUR_OF_DAY, 0);
             today.set(Calendar.MINUTE, 0);
             today.set(Calendar.SECOND, 0);
             today.set(Calendar.MILLISECOND, 0);
 
-            // Check if the selected date is in the past
             if (selectedDate.before(today.getTime())) {
-                // Show a toast if the selected date is in the past
                 Toast.makeText(getContext(), "Cannot select a past date", Toast.LENGTH_SHORT).show();
             } else {
-                // Proceed with saving the meal to the selected date
                 if (meal != null) {
                     presenter.savePlannedMeal(meal, selectedDate);
                 } else {
@@ -213,10 +206,7 @@ public class MealDetailsFragment extends Fragment implements DetailsView {
             }
         }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
 
-        // Disable past dates in the DatePicker
         datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis());
-
-        // Show the DatePicker dialog
         datePickerDialog.show();
     }
 

@@ -70,9 +70,19 @@ public class MealDetailsPresenter {
 
     // Saving a meal to planned meals
     public void savePlannedMeal(Meal meal, Date date) {
-        PlannedMeal plannedMeal = convertToPlannedMeal(meal, date);
-        repository.insertPlannedMeal(plannedMeal);
+        // Check if the meal already exists in the local database
+        repository.isMealExists(meal.idMeal, isExists -> {
+            if (!isExists) {
+                // If meal doesn't exist, save it first
+                repository.insertSavedMeal(meal);
+            }
+
+            // Proceed to save the meal to planned meals
+            PlannedMeal plannedMeal = convertToPlannedMeal(meal, date);
+            repository.insertPlannedMeal(plannedMeal);
+        });
     }
+
 
     private PlannedMeal convertToPlannedMeal(Meal meal, Date date) {
         PlannedMeal plannedMeal = new PlannedMeal();
