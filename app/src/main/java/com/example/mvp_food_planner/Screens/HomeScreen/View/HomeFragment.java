@@ -96,7 +96,10 @@ public class HomeFragment extends Fragment implements HomeView, RandomMealAdapte
 
     @Override
     public void getError(String errMsg) {
-        Toast.makeText(getContext(), errMsg, Toast.LENGTH_SHORT).show();
+        if (getContext() != null) {
+            Toast.makeText(getContext(), errMsg, Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     // Handle meal click events

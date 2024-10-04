@@ -70,5 +70,11 @@ public class MealLocalRepository {
     public void deletePlannedMeal(PlannedMeal meal) {
         executorService.execute(() -> mealPlannedDao.deletePlannedMeal(meal));
     }
+
+    // Fetch a specific meal by ID
+    public LiveData<Meal> getMealById(String mealId) {
+        return mealSaveDAO.getMealById(mealId);
+    }
+
 }
 

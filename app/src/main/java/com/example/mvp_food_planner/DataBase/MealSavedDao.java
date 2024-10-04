@@ -25,4 +25,7 @@ public interface MealSavedDao {
 
     @Query("SELECT COUNT(*) > 0 FROM fav_meals_table WHERE idMeal = :mealId")
     boolean isMealExists(String mealId);
+
+    @Query("SELECT * FROM fav_meals_table WHERE idMeal = :mealId LIMIT 1")
+    LiveData<Meal> getMealById(String mealId);
 }

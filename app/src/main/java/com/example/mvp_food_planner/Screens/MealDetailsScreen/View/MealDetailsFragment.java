@@ -45,6 +45,7 @@ public class MealDetailsFragment extends Fragment implements DetailsView {
     private CheckBox cbHeart;
     private Meal meal;
     private LottieAnimationView lottieCalender;
+    private boolean isInitializingCheckBox = false; // default value to avoid auto-checking the checkbox
 
     //@SuppressLint("WrongViewCast")
     @Override
@@ -76,24 +77,30 @@ public class MealDetailsFragment extends Fragment implements DetailsView {
             }
         }
         cbHeart.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (meal != null) {
-                if (isChecked) {
-                    presenter.saveMeal(meal);
-                    showUndoSnackbar(view, "Meal added to favorites", () -> {
-                        presenter.deleteMeal(meal);
-                        cbHeart.setChecked(false);  // Uncheck the box when undoing
-                    });
-                } else {
-                    presenter.deleteMeal(meal);
-                    showUndoSnackbar(view, "Meal removed from favorites", () -> {
+            // Check if we're currently initializing the checkbox (to avoid premature trigger)
+            if (!isInitializingCheckBox) {
+                if (meal != null) {
+                    if (isChecked) {
+                        // Add meal to favorites
                         presenter.saveMeal(meal);
-                        cbHeart.setChecked(true);  // Check the box when undoing
-                    });
+                        showUndoSnackbar(view, "Meal added to favorites", () -> {
+                            presenter.deleteMeal(meal);
+                            cbHeart.setChecked(false); // Uncheck on undo
+                        });
+                    } else {
+                        // Remove meal from favorites
+                        presenter.deleteMeal(meal);
+                        showUndoSnackbar(view, "Meal removed from favorites", () -> {
+                            presenter.saveMeal(meal);
+                            cbHeart.setChecked(true); // Check on undo
+                        });
+                    }
+                } else {
+                    Toast.makeText(getContext(), "Meal is null", Toast.LENGTH_SHORT).show();
                 }
-            } else {
-                Toast.makeText(getContext(), "Meal is null", Toast.LENGTH_SHORT).show();
             }
         });
+
 
         // Add click listener to Lottie calendar
         lottieCalender.setOnClickListener(v -> {
@@ -107,6 +114,16 @@ public class MealDetailsFragment extends Fragment implements DetailsView {
     @Override
     public void showMealDetails(Meal meal) {
         this.meal = meal;
+
+        // Disable the listener while setting the initial checkbox state
+        isInitializingCheckBox = true; // This flag will prevent the listener from triggering
+
+        presenter.isMealFavorite(meal.idMeal, isFavorite -> {
+            cbHeart.setChecked(isFavorite); // Programmatically set the checkbox state
+
+            // Only after the checkbox state has been fully set, re-enable the listener
+            isInitializingCheckBox = false;
+        });
         Glide.with(getContext()).load(meal.strMealThumb)
                 .placeholder(R.drawable.ic_launcher_foreground)
                 .into(thumbnail);
