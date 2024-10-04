@@ -27,10 +27,12 @@ import com.example.mvp_food_planner.R;
 import com.example.mvp_food_planner.Screens.MealDetailsScreen.Presenter.MealDetailsPresenter;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 
@@ -199,15 +201,26 @@ public class MealDetailsFragment extends Fragment implements DetailsView {
                 Toast.makeText(getContext(), "Cannot select a past date", Toast.LENGTH_SHORT).show();
             } else {
                 if (meal != null) {
+                    // Save the meal to the selected date
                     presenter.savePlannedMeal(meal, selectedDate);
+
+                    // Format the selected date for the toast
+                    String day = String.format("%02d", dayOfMonth);
+                    String monthName = new SimpleDateFormat("MMMM", Locale.getDefault()).format(calendar.getTime());
+
+                    // Show a toast confirming the meal was added
+                    String message = "Meal added to: " + day + " " + monthName;
+                    Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(getContext(), "Meal is not available", Toast.LENGTH_SHORT).show();
                 }
             }
         }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
 
+        // Prevent selecting past dates
         datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis());
         datePickerDialog.show();
     }
+
 
 }

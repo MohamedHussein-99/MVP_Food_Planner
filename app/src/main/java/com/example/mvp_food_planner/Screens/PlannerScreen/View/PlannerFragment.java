@@ -73,8 +73,17 @@ public class PlannerFragment extends Fragment implements PlannerView, PlannerAda
     @Override
     public void showPlannedMeals(List<PlannedMeal> meals) {
         this.plannedMeals = meals;
+
+        if (meals.isEmpty()) {
+            // Check if the fragment is still attached to an activity and the context is valid
+            if (isAdded() && getContext() != null) {
+                Toast.makeText(getContext(), "No meals planned for this day", Toast.LENGTH_SHORT).show();
+            }
+        }
+
         adapter.updatePlannedMeals(meals);
     }
+
 
     @Override
     public void onDeleteMeal(PlannedMeal meal) {

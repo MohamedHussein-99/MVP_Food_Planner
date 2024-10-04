@@ -8,6 +8,7 @@ import com.example.mvp_food_planner.Model.Entity.PlannedMeal;
 import com.example.mvp_food_planner.Model.Repo.MealLocalRepository;
 import com.example.mvp_food_planner.Screens.PlannerScreen.View.PlannerView;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -26,14 +27,13 @@ public class PlannerPresenter {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(day);
 
-        // Set the time to the beginning of the day (00:00:00)
+        // Set the time to the beginning and end of the day
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MILLISECOND, 0);
         Date startOfDay = calendar.getTime();
 
-        // Set the time to the end of the day (23:59:59)
         calendar.set(Calendar.HOUR_OF_DAY, 23);
         calendar.set(Calendar.MINUTE, 59);
         calendar.set(Calendar.SECOND, 59);
@@ -48,7 +48,8 @@ public class PlannerPresenter {
                 if (meals != null && !meals.isEmpty()) {
                     view.showPlannedMeals(meals);
                 } else {
-                    view.showError("No meals planned for this day");
+                    // Pass an empty list to the view
+                    view.showPlannedMeals(new ArrayList<>());
                 }
             }
         });
