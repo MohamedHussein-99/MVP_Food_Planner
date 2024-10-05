@@ -1,9 +1,12 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Base.Theme.MVP_Food_Planner" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
-    </style>
+<resources>
+    <!-- Base application theme -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here -->
+        <item name="android:windowBackground">@color/appBackgroundColor</item>
+        <item name="android:textColor">@color/appTextColor</item>
 
-    <style name="Theme.MVP_Food_Planner" parent="Base.Theme.MVP_Food_Planner" />
+        <!-- Other customizations, such as buttons, EditText, etc. -->
+        <item name="android:editTextColor">@color/appTextColor</item>
+        <item name="android:textColorPrimary">@color/appTextColor</item>
+    </style>
 </resources>

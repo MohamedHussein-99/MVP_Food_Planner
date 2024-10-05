@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -18,6 +19,8 @@ import com.example.mvp_food_planner.Model.POJO.CountryFilter;
 import com.example.mvp_food_planner.Model.Repo.Repo;
 import com.example.mvp_food_planner.Network.Client;
 import com.example.mvp_food_planner.R;
+import com.example.mvp_food_planner.Screens.FilterScreen.ByCountry.View.ByCountryAdapter;
+import com.example.mvp_food_planner.Screens.FilterScreen.FilteredItems.View.FilteredItemFragment;
 import com.example.mvp_food_planner.Screens.HomeScreen.Presenter.HomePresenter;
 import com.example.mvp_food_planner.Screens.MealDetailsScreen.View.MealDetailsFragment;
 
@@ -25,13 +28,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class HomeFragment extends Fragment implements HomeView, RandomMealAdapter.MealClickListener {
+public class HomeFragment extends Fragment implements HomeView, RandomMealAdapter.MealClickListener, ByCountryAdapter.AreaClickListener {
 
     private HomePresenter presenter;
     private RandomMealAdapter mealAdapter;
     private List<Meal> randomMeals = new ArrayList<>();
     private List<CategoryFilter> categories = new ArrayList<>();
     private CategoryAdapter categoryAdapter;
+    private ByCountryAdapter countryAdapter;
+    private List<CountryFilter> countries = new ArrayList<>(); // Country list
 
     public HomeFragment() { }
 
@@ -46,7 +51,7 @@ public class HomeFragment extends Fragment implements HomeView, RandomMealAdapte
         // Fetch initial data
         presenter.getCategories();
         presenter.getRandomMeals(5);
-        presenter.getCountries();
+        presenter.getCountries();  // Fetch countries
     }
 
     @Override
@@ -66,6 +71,13 @@ public class HomeFragment extends Fragment implements HomeView, RandomMealAdapte
         categoryRecyclerView.setNestedScrollingEnabled(false); // Disable nested scrolling
         categoryRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         categoryRecyclerView.setAdapter(categoryAdapter);
+
+        // Setup countries RecyclerView
+        RecyclerView countryRecyclerView = view.findViewById(R.id.recyclerCountry);
+        countryAdapter = new ByCountryAdapter(getContext(), countries, this);
+        countryRecyclerView.setNestedScrollingEnabled(false);
+        countryRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2, GridLayoutManager.HORIZONTAL, false));
+        countryRecyclerView.setAdapter(countryAdapter);
 
         return view;
     }
@@ -88,10 +100,13 @@ public class HomeFragment extends Fragment implements HomeView, RandomMealAdapte
         categoryAdapter.notifyDataSetChanged();
     }
 
-    // Handle country data if needed
+    // Update countries RecyclerView
+    @SuppressLint("NotifyDataSetChanged")
     @Override
     public void getCountry(List<CountryFilter> countries) {
-        // You may want to handle countries similarly, depending on your UI
+        this.countries.clear();
+        this.countries.addAll(countries);
+        countryAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -99,7 +114,6 @@ public class HomeFragment extends Fragment implements HomeView, RandomMealAdapte
         if (getContext() != null) {
             Toast.makeText(getContext(), errMsg, Toast.LENGTH_SHORT).show();
         }
-
     }
 
     // Handle meal click events
@@ -120,5 +134,22 @@ public class HomeFragment extends Fragment implements HomeView, RandomMealAdapte
             Toast.makeText(getContext(), "Meal ID is missing", Toast.LENGTH_SHORT).show();
         }
     }
+
+    // Handle country click events
+    @Override
+    public void onAreaClicked(CountryFilter country) {
+        // Navigate to FilteredItemFragment to display meals by country
+        Bundle bundle = new Bundle();
+        bundle.putString("selectedArea", country.getStrArea());
+
+        FilteredItemFragment filteredItemFragment = new FilteredItemFragment();
+        filteredItemFragment.setArguments(bundle);
+
+        getParentFragmentManager().beginTransaction()
+                .replace(R.id.fragmentNav, filteredItemFragment)
+                .addToBackStack(null)
+                .commit();
+    }
 }
+
 
