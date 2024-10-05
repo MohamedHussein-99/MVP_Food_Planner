@@ -22,7 +22,7 @@ public class ByCategoryAdapter extends RecyclerView.Adapter<ByCategoryAdapter.Ca
 
     private final Context context;
     private final List<CategoryFilter> categories;
-    private final CategoryClickListener listener; // Add listener
+    private final CategoryClickListener listener;
 
     public ByCategoryAdapter(Context context, List<CategoryFilter> categories, CategoryClickListener listener) {
         this.context = context;
@@ -65,10 +65,11 @@ public class ByCategoryAdapter extends RecyclerView.Adapter<ByCategoryAdapter.Ca
         }
     }
 
-    // Listener for category click
+    // Listener interface for category clicks
     public interface CategoryClickListener {
         void onCategoryClick(String category);
     }
 }
+
 
 

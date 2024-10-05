@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.mvp_food_planner.Model.POJO.CategoryFilter;
 import com.example.mvp_food_planner.R;
+import com.example.mvp_food_planner.Screens.FilterScreen.ByCategory.View.ByCategoryAdapter;
 
 import java.util.List;
 
@@ -20,10 +21,12 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
 
     private final Context context;
     private final List<CategoryFilter> categories;
+    private final ByCategoryAdapter.CategoryClickListener listener; // Change here
 
-    public CategoryAdapter(Context context, List<CategoryFilter> categories) {
+    public CategoryAdapter(Context context, List<CategoryFilter> categories, ByCategoryAdapter.CategoryClickListener listener) {
         this.context = context;
         this.categories = categories;
+        this.listener = listener; // Initialize the listener
     }
 
     @NonNull
@@ -38,6 +41,13 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         CategoryFilter category = categories.get(position);
         holder.txtCategory.setText(category.getStrCategory());
         Glide.with(holder.itemView.getContext()).load(category.getStrCategoryThumb()).into(holder.imgMeal);
+
+        // Set the click listener for the item
+        holder.itemView.setOnClickListener(v -> {
+            if (listener != null) { // Check if listener is not null
+                listener.onCategoryClick(category.getStrCategory()); // Trigger the click event
+            }
+        });
     }
 
     @Override

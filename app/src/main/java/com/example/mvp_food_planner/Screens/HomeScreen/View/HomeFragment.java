@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ import com.example.mvp_food_planner.Model.POJO.CountryFilter;
 import com.example.mvp_food_planner.Model.Repo.Repo;
 import com.example.mvp_food_planner.Network.Client;
 import com.example.mvp_food_planner.R;
+import com.example.mvp_food_planner.Screens.FilterScreen.ByCategory.View.ByCategoryAdapter;
 import com.example.mvp_food_planner.Screens.FilterScreen.ByCountry.View.ByCountryAdapter;
 import com.example.mvp_food_planner.Screens.FilterScreen.FilteredItems.View.FilteredItemFragment;
 import com.example.mvp_food_planner.Screens.HomeScreen.Presenter.HomePresenter;
@@ -28,15 +30,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class HomeFragment extends Fragment implements HomeView, RandomMealAdapter.MealClickListener, ByCountryAdapter.AreaClickListener {
+public class HomeFragment extends Fragment implements HomeView, RandomMealAdapter.MealClickListener, ByCountryAdapter.AreaClickListener, ByCategoryAdapter.CategoryClickListener {
 
     private HomePresenter presenter;
     private RandomMealAdapter mealAdapter;
     private List<Meal> randomMeals = new ArrayList<>();
     private List<CategoryFilter> categories = new ArrayList<>();
-    private CategoryAdapter categoryAdapter;
+    private CategoryAdapter categoryAdapter; // Updated to use ByCategoryAdapter
     private ByCountryAdapter countryAdapter;
-    private List<CountryFilter> countries = new ArrayList<>(); // Country list
+    private List<CountryFilter> countries = new ArrayList<>();
 
     public HomeFragment() { }
 
@@ -44,14 +46,14 @@ public class HomeFragment extends Fragment implements HomeView, RandomMealAdapte
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Create Repo instance and pass it to the presenter
+        // Initialize Repo instance and pass it to the presenter
         Repo repo = new Repo(Client.getInstance());
         presenter = new HomePresenter(this, repo);
 
         // Fetch initial data
         presenter.getCategories();
         presenter.getRandomMeals(5);
-        presenter.getCountries();  // Fetch countries
+        presenter.getCountries();
     }
 
     @Override
@@ -61,14 +63,14 @@ public class HomeFragment extends Fragment implements HomeView, RandomMealAdapte
         // Setup random meals RecyclerView
         RecyclerView mealRecyclerView = view.findViewById(R.id.recyclerRandomMeal);
         mealAdapter = new RandomMealAdapter(getContext(), randomMeals, this);
-        mealRecyclerView.setNestedScrollingEnabled(false); // Disable nested scrolling
+        mealRecyclerView.setNestedScrollingEnabled(false);
         mealRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         mealRecyclerView.setAdapter(mealAdapter);
 
         // Setup categories RecyclerView
         RecyclerView categoryRecyclerView = view.findViewById(R.id.recyclerCategory);
-        categoryAdapter = new CategoryAdapter(getContext(), categories);
-        categoryRecyclerView.setNestedScrollingEnabled(false); // Disable nested scrolling
+        categoryAdapter = new CategoryAdapter(getContext(), categories, this); // Pass 'this' as the CategoryClickListener
+        categoryRecyclerView.setNestedScrollingEnabled(false);
         categoryRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         categoryRecyclerView.setAdapter(categoryAdapter);
 
@@ -82,7 +84,7 @@ public class HomeFragment extends Fragment implements HomeView, RandomMealAdapte
         return view;
     }
 
-    // Update random meals RecyclerView
+    // Handle random meals updates
     @SuppressLint("NotifyDataSetChanged")
     @Override
     public void getRandMeal(List<Meal> meals) {
@@ -91,7 +93,7 @@ public class HomeFragment extends Fragment implements HomeView, RandomMealAdapte
         mealAdapter.notifyDataSetChanged();
     }
 
-    // Update categories RecyclerView
+    // Handle categories updates
     @SuppressLint("NotifyDataSetChanged")
     @Override
     public void getCategories(List<CategoryFilter> categories) {
@@ -100,7 +102,7 @@ public class HomeFragment extends Fragment implements HomeView, RandomMealAdapte
         categoryAdapter.notifyDataSetChanged();
     }
 
-    // Update countries RecyclerView
+    // Handle country updates
     @SuppressLint("NotifyDataSetChanged")
     @Override
     public void getCountry(List<CountryFilter> countries) {
@@ -110,11 +112,15 @@ public class HomeFragment extends Fragment implements HomeView, RandomMealAdapte
     }
 
     @Override
-    public void getError(String errMsg) {
-        if (getContext() != null) {
-            Toast.makeText(getContext(), errMsg, Toast.LENGTH_SHORT).show();
+    public void getError(String message) {
+        if (getActivity() != null) {
+            Toast.makeText(getActivity(), "No Internet Connection", Toast.LENGTH_SHORT).show();
+        } else {
+            // Handle the case where getActivity() is null (e.g., log the error)
+            Log.e("HomeFragment", "Activity is null, cannot show toast.");
         }
     }
+
 
     // Handle meal click events
     @Override
@@ -130,15 +136,12 @@ public class HomeFragment extends Fragment implements HomeView, RandomMealAdapte
                     .replace(R.id.fragmentNav, detailsFragment)
                     .addToBackStack(null)
                     .commit();
-        } else {
-            Toast.makeText(getContext(), "Meal ID is missing", Toast.LENGTH_SHORT).show();
         }
     }
 
-    // Handle country click events
+    // Handle country click events (existing method)
     @Override
     public void onAreaClicked(CountryFilter country) {
-        // Navigate to FilteredItemFragment to display meals by country
         Bundle bundle = new Bundle();
         bundle.putString("selectedArea", country.getStrArea());
 
@@ -150,6 +153,24 @@ public class HomeFragment extends Fragment implements HomeView, RandomMealAdapte
                 .addToBackStack(null)
                 .commit();
     }
+
+    // Handle category click events (new method)
+    @Override
+    public void onCategoryClick(String category) {
+        // Navigate to FilteredItemFragment and pass the selected category
+        Bundle bundle = new Bundle();
+        bundle.putString("selectedCategory", category);
+
+        FilteredItemFragment filteredItemFragment = new FilteredItemFragment();
+        filteredItemFragment.setArguments(bundle);
+
+        getParentFragmentManager().beginTransaction()
+                .replace(R.id.fragmentNav, filteredItemFragment)
+                .addToBackStack(null)
+                .commit();
+    }
 }
+
+
 
 
