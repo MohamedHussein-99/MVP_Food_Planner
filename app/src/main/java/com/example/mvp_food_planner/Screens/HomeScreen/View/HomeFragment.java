@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.mvp_food_planner.Model.Entity.Meal;
@@ -36,29 +37,35 @@ public class HomeFragment extends Fragment implements HomeView, RandomMealAdapte
     private RandomMealAdapter mealAdapter;
     private List<Meal> randomMeals = new ArrayList<>();
     private List<CategoryFilter> categories = new ArrayList<>();
-    private CategoryAdapter categoryAdapter; // Updated to use ByCategoryAdapter
+    private CategoryAdapter categoryAdapter;
     private ByCountryAdapter countryAdapter;
     private List<CountryFilter> countries = new ArrayList<>();
+
+    // Progress Bar Variables
+    private ProgressBar progressMeal;
+    private ProgressBar progressCategory;
+    private ProgressBar progressCountry;
 
     public HomeFragment() { }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        // Initialize Repo instance and pass it to the presenter
         Repo repo = new Repo(Client.getInstance());
         presenter = new HomePresenter(this, repo);
 
-        // Fetch initial data
-        presenter.getCategories();
-        presenter.getRandomMeals(5);
-        presenter.getCountries();
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
+
+
+        // Initialize Progress Bars
+        progressMeal = view.findViewById(R.id.progressMeal);
+        progressCategory = view.findViewById(R.id.progressCategory);
+        progressCountry = view.findViewById(R.id.progressCountry);
 
         // Setup random meals RecyclerView
         RecyclerView mealRecyclerView = view.findViewById(R.id.recyclerRandomMeal);
@@ -69,7 +76,7 @@ public class HomeFragment extends Fragment implements HomeView, RandomMealAdapte
 
         // Setup categories RecyclerView
         RecyclerView categoryRecyclerView = view.findViewById(R.id.recyclerCategory);
-        categoryAdapter = new CategoryAdapter(getContext(), categories, this); // Pass 'this' as the CategoryClickListener
+        categoryAdapter = new CategoryAdapter(getContext(), categories, this);
         categoryRecyclerView.setNestedScrollingEnabled(false);
         categoryRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         categoryRecyclerView.setAdapter(categoryAdapter);
@@ -81,46 +88,66 @@ public class HomeFragment extends Fragment implements HomeView, RandomMealAdapte
         countryRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2, GridLayoutManager.HORIZONTAL, false));
         countryRecyclerView.setAdapter(countryAdapter);
 
+        // Fetch initial data
+        fetchInitialData();
+
         return view;
     }
 
+    private void fetchInitialData() {
+        showLoading(true); // Show loading progress
+        presenter.getCategories();
+        presenter.getRandomMeals(5);
+        presenter.getCountries();
+    }
+
+    // Show or hide progress bars
+    private void showLoading(boolean isLoading) {
+        if (progressMeal != null) {
+            progressMeal.setVisibility(isLoading ? View.VISIBLE : View.GONE);
+        }
+        if (progressCategory != null) {
+            progressCategory.setVisibility(isLoading ? View.VISIBLE : View.GONE);
+        }
+        if (progressCountry != null) {
+            progressCountry.setVisibility(isLoading ? View.VISIBLE : View.GONE);
+        }
+    }
+
     // Handle random meals updates
-    @SuppressLint("NotifyDataSetChanged")
     @Override
     public void getRandMeal(List<Meal> meals) {
         this.randomMeals.clear();
         this.randomMeals.addAll(meals);
         mealAdapter.notifyDataSetChanged();
+        showLoading(false); // Hide progress bar when data is loaded
     }
 
     // Handle categories updates
-    @SuppressLint("NotifyDataSetChanged")
     @Override
     public void getCategories(List<CategoryFilter> categories) {
         this.categories.clear();
         this.categories.addAll(categories);
         categoryAdapter.notifyDataSetChanged();
+        showLoading(false); // Hide progress bar when data is loaded
     }
 
     // Handle country updates
-    @SuppressLint("NotifyDataSetChanged")
     @Override
     public void getCountry(List<CountryFilter> countries) {
         this.countries.clear();
         this.countries.addAll(countries);
         countryAdapter.notifyDataSetChanged();
+        showLoading(false); // Hide progress bar when data is loaded
     }
 
     @Override
     public void getError(String message) {
         if (getActivity() != null) {
-            Toast.makeText(getActivity(), "No Internet Connection", Toast.LENGTH_SHORT).show();
-        } else {
-            // Handle the case where getActivity() is null (e.g., log the error)
-            Log.e("HomeFragment", "Activity is null, cannot show toast.");
+            Toast.makeText(getActivity(), "No Network Connectivity", Toast.LENGTH_SHORT).show();
         }
+        showLoading(false); // Hide progress bar on error
     }
-
 
     // Handle meal click events
     @Override
@@ -128,10 +155,8 @@ public class HomeFragment extends Fragment implements HomeView, RandomMealAdapte
         if (meal != null && meal.idMeal != null) {
             Bundle bundle = new Bundle();
             bundle.putString("mealId", meal.idMeal);
-
             MealDetailsFragment detailsFragment = new MealDetailsFragment();
             detailsFragment.setArguments(bundle);
-
             getParentFragmentManager().beginTransaction()
                     .replace(R.id.fragmentNav, detailsFragment)
                     .addToBackStack(null)
@@ -139,38 +164,29 @@ public class HomeFragment extends Fragment implements HomeView, RandomMealAdapte
         }
     }
 
-    // Handle country click events (existing method)
+    // Handle country click events
     @Override
     public void onAreaClicked(CountryFilter country) {
         Bundle bundle = new Bundle();
         bundle.putString("selectedArea", country.getStrArea());
-
         FilteredItemFragment filteredItemFragment = new FilteredItemFragment();
         filteredItemFragment.setArguments(bundle);
-
         getParentFragmentManager().beginTransaction()
                 .replace(R.id.fragmentNav, filteredItemFragment)
                 .addToBackStack(null)
                 .commit();
     }
 
-    // Handle category click events (new method)
+    // Handle category click events
     @Override
     public void onCategoryClick(String category) {
-        // Navigate to FilteredItemFragment and pass the selected category
         Bundle bundle = new Bundle();
         bundle.putString("selectedCategory", category);
-
         FilteredItemFragment filteredItemFragment = new FilteredItemFragment();
         filteredItemFragment.setArguments(bundle);
-
         getParentFragmentManager().beginTransaction()
                 .replace(R.id.fragmentNav, filteredItemFragment)
                 .addToBackStack(null)
                 .commit();
     }
 }
-
-
-
-

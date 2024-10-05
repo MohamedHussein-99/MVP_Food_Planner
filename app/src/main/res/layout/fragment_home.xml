@@ -55,14 +55,14 @@
                 android:id="@+id/txtCuisines"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="400dp"
                 android:fontFamily="@font/hachi_maru_pop"
                 android:text="@string/txtcuisines"
                 android:textColor="#7E102C"
                 android:textSize="30sp"
                 android:textStyle="bold|italic"
                 app:layout_constraintStart_toStartOf="@+id/txtDailySuggest"
-                app:layout_constraintTop_toBottomOf="@+id/recyclerRandomMeal" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerCategory"
@@ -78,11 +78,10 @@
                 android:layout_width="141dp"
                 android:layout_height="117dp"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="4dp"
+                android:layout_marginEnd="29dp"
                 app:layout_constraintBottom_toBottomOf="@+id/txtCuisines"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/txtCuisines"
-                app:layout_constraintTop_toBottomOf="@+id/recyclerRandomMeal"
-                app:layout_constraintVertical_bias="0.629"
                 app:lottie_autoPlay="true"
                 app:lottie_loop="true"
                 app:lottie_rawRes="@raw/cuisine" />
@@ -119,6 +118,42 @@
                 android:nestedScrollingEnabled="false"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/lottieEarth" />
+
+            <ProgressBar
+                android:id="@+id/progressMeal"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="180dp"
+                android:layout_marginTop="88dp"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/txtDailySuggest" />
+
+            <ProgressBar
+                android:id="@+id/progressCategory"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="180dp"
+                android:layout_marginTop="72dp"
+                android:layout_gravity="center"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtCuisines" />
+
+            <ProgressBar
+                android:id="@+id/progressCountry"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="72dp"
+                android:layout_marginEnd="184dp"
+                android:layout_gravity="center"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtCountry" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
