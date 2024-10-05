@@ -1,6 +1,9 @@
 package com.example.mvp_food_planner.Screens.HomeScreen.View;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -95,11 +98,17 @@ public class HomeFragment extends Fragment implements HomeView, RandomMealAdapte
     }
 
     private void fetchInitialData() {
-        showLoading(true); // Show loading progress
-        presenter.getCategories();
-        presenter.getRandomMeals(5);
-        presenter.getCountries();
+        showLoading(true); // Always show loading progress
+        if (isNetworkConnected()) {
+            presenter.getCategories();
+            presenter.getRandomMeals(5);
+            presenter.getCountries();
+        } else {
+            showNoNetworkMessage();
+            // showLoading(false); // Uncomment if you want to hide it after showing the message
+        }
     }
+
 
     // Show or hide progress bars
     private void showLoading(boolean isLoading) {
@@ -189,4 +198,16 @@ public class HomeFragment extends Fragment implements HomeView, RandomMealAdapte
                 .addToBackStack(null)
                 .commit();
     }
+
+    private boolean isNetworkConnected() {
+        ConnectivityManager cm = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        return activeNetwork != null && activeNetwork.isConnectedOrConnecting();
+    }
+
+    private void showNoNetworkMessage() {
+        Toast.makeText(getActivity(), "No Network Connectivity", Toast.LENGTH_SHORT).show();
+    }
+
+
 }
